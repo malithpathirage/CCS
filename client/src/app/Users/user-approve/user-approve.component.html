@@ -1,0 +1,191 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Approve Permission</h3>
+        <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+    <form [formGroup]="appModuleForm" (ngSubmit)="appModuleForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-1">User Name </label>
+                <div class="col-sm-2">
+                    <igx-combo id="user" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="permitUsers" placeholder="User Name" (onSelectionChange)='onUserSelect($event)' 
+                        (onSelectionChange)="singleSelection($event)" formControlName="user" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+
+                <label class="col-sm-1"> Module </label>
+                <div class="col-sm-2">
+                    <igx-combo #cmbmodule id="module" class="combo" displayKey="menuName" valueKey="autoIdx"
+                        [itemsMaxHeight]="250" [data]="moduleList" placeholder="Module" (onSelectionChange)="singleSelection($event)"
+                        formControlName="module" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkBuyPass formControlName="buyPass" >
+                            BuyPass
+                        </igx-checkbox>
+                    </div>
+                </div>   
+                
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="clearApproveModule()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!appModuleForm.valid" (click)="saveUserApproveModule()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>     
+
+            </div>          
+
+            <div class="form-group row">
+                <div class="col-sm-12">
+
+                    <igx-grid #moduleGrid [data]="userAppModList" [autoGenerate]="false" [paging]="true" [rowEditable]="false" 
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100" height="500px" 
+                        displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'Single'">
+                        <igx-column [field]="'menuName'" [header]="'Module Name'" [resizable]="true" [width]="'200px'" [dataType]="'string'" 
+                            [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <!-- <igx-column [field]="'isSelect'" [header]="'Select'" [resizable]="true" [dataType]="'boolean'" [width]="'100px'"
+                            [sortable]="true" [editable]="true">
+                        </igx-column> -->
+                        <igx-column [field]="'buyPass'" [header]="'BuyPass'" [resizable]="true" [dataType]="'boolean'" [sortable]="true"
+                            [editable]="true" [width]="'100px'">
+                        </igx-column>
+                        <igx-column [width]="'120px'" [header]="' '" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onApproveUser($event,cell.cellID)" data-toggle="modal" 
+                                    data-target="#modalApprove">
+                                    <igx-icon family="material">account_circle</igx-icon>
+                                </button>  
+                                <button igxButton="icon" class="fab-compact" (click)="onEditApproveModule($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                                <button igxButton="icon" class="fab-compact" (click)="openAMDeleteDialog($event,cell.cellID)">
+                                    <igx-icon family="material">delete</igx-icon>
+                                </button>                              
+                            </ng-template>
+                        </igx-column>
+                    </igx-grid>
+                </div>                
+            </div>
+        </div>
+    </form>
+
+    <!-- <div class="card-footer">
+      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+      the plugin.
+    </div> -->
+</div>
+
+<div class="modal fade" id="modalApprove">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Single/Multiple Approvers </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="appUsersForm" (ngSubmit)="appUsersForm.valid" autocomplete="off">
+                        <div class="row">
+                        
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label> Approver </label>
+                                    <igx-combo #cmbApprover id="approver" class="combo" displayKey="cAgentName" valueKey="idAgents" [itemsMaxHeight]="250"
+                                        [data]="permitUsers" placeholder="Approver" (onSelectionChange)="singleSelection($event)"
+                                        formControlName="approver" searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <igx-checkbox #chkIsDefault formControlName="isDefault">
+                                        IsDefault
+                                    </igx-checkbox>
+                                </div>
+                            </div>
+                        
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <igx-checkbox #chkIsFinalApprove formControlName="isFinalApprove">
+                                        IsFinalApprove
+                                    </igx-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default mr-3" (click)="clearApproveUser()" > 
+                                        <i class="fas fa-broom"></i> </button>
+                                    <button type="button" class="btn btn-success" [disabled]="!appUsersForm.valid" (click)="saveApproveUser()">
+                                        <i class="fas fa-save"></i> </button>
+                                </div>   
+                            </div>                        
+                        </div>                        
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <igx-grid #userGrid [data]="userList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                                    [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100" height="300px"
+                                    displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                                    [rowSelection]="'Single'">
+                                    <igx-column [field]="'cAgentName'" [header]="'Approver'" [resizable]="true" [width]="'200px'" [dataType]="'string'"
+                                        [sortable]="true" [editable]="false">
+                                    </igx-column>
+                                    <igx-column [field]="'isDefault'" [header]="'IsDefault'" [resizable]="true" [dataType]="'boolean'" [sortable]="true"
+                                        [editable]="true" [width]="'150px'">
+                                    </igx-column>
+                                    <igx-column [field]="'isFinalApprove'" [header]="'IsFinalApprove'" [resizable]="true" [dataType]="'boolean'"
+                                        [sortable]="true" [editable]="true" [width]="'150px'">
+                                    </igx-column>
+                                    <igx-column [width]="'100px'" [header]="' '" [selectable]="false" [sortable]="false" [resizable]="false">
+                                        <ng-template igxCell let-cell="cell">                                              
+                                            <button igxButton="icon" class="fab-compact" (click)="onEditApproveUser($event,cell.cellID)">
+                                                <igx-icon family="material">edit</igx-icon>
+                                            </button>
+                                            <button igxButton="icon" class="fab-compact" (click)="openAUDeleteDialog($event,cell.cellID)">
+                                                <igx-icon family="material">delete</igx-icon>
+                                            </button>                              
+                                        </ng-template>
+                                    </igx-column>
+                                </igx-grid>
+                            </div>                            
+                        </div>                                            
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                             
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<igx-dialog #appModuledialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="appModuledialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKAppModule($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>
+
+<igx-dialog #appUserdialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="appUserdialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKAppUsers($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>

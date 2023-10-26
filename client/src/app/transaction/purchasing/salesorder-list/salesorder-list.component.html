@@ -1,0 +1,142 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Sales Order List</h3>  
+        <div class="offset-md-11 col-1">
+            <div class="btn-group">
+                <button type="button" class="btn btn-success mr-1" data-toggle="tooltip" data-placement="bottom"
+                    title="Add" data-toggle="modal" data-target="#modalSalesList" data-placement="bottom">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button type="button" class="btn btn-default mr-1" data-toggle="tooltip" data-placement="bottom"
+                    title="Clear" (click)="refereshControls()">
+                    <i class="fas fa-redo"></i>
+                </button>
+            </div>
+        </div>      
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <igx-grid #indentsoGrid [data]="indentSOList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'soDelId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                height="200px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+                <igx-column field=" " [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false"
+                    [editable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" [disabled]="(status > 1 ? true : false)"
+                            (click)="openDeleteDialog($event,cell.cellID)">
+                            <igx-icon family="material">delete</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+                <igx-column [field]="'saleOrderNo'" [header]="'SalesOrder No'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'article'" [header]="'Article'" [resizable]="true" [dataType]="'string'"
+                    [width]="'200px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'"
+                    [width]="'100px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'uom'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                    [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'totQty'" [header]="'Total Qty'" [resizable]="true" [dataType]="'number'"
+                    [width]="'120px'" [sortable]="true" [editable]="true">
+                </igx-column>
+                <igx-column [field]="'unitPrice'" [header]="'Unit Price'" [resizable]="true" [dataType]="'number'"
+                    [pipeArgs]="formatPrice" [width]="'120px'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'deliveryDate'" [header]="'DeliveryDate'" [resizable]="true" [dataType]="'date'"
+                    [sortable]="true" [width]="'150px'" [pipeArgs]="formatDateOptions">
+                </igx-column>
+
+            </igx-grid>
+        </div>
+    </div>
+</div>
+
+<!-- SALES ORDER LIST  -->
+<div class="modal fade" id="modalSalesList">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> List of Sales Order </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="salesListForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-4">            
+                            <div class="form-group">
+                                <igx-input-group>
+                                    <input class="gridSample__filter" igxInput type="text" placeholder="Filter by Customer PO #" 
+                                    (input)="filterByCusRef($event.target.value)" formControlName="customerPO">
+                                    <label igxLabel for="customerPO"> Customer PO </label>
+                                </igx-input-group><br>
+                            </div>            
+                        </div>  
+                        <div class="col-md-2">            
+                            <div class="form-group">
+                                <button type="button" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" 
+                                        title="OK" data-dismiss="modal" (click)="loadSalesOrderDt()">
+                                <i class="fa fa-check-circle"></i>
+                                </button>
+                            </div>            
+                        </div>  
+                    </div>
+                    
+                    <div class="row">
+                        <igx-grid #salesListGrid [data]="salesOrderList" [autoGenerate]="false" [paging]="true" [rowEditable]="false" 
+                        [primaryKey]="'soDelId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500" height="400px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'multiple'">
+                            <igx-column [field]="'orderRef'" [header]="'Sales Order#'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'150px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'customerRef'" [header]="'Customer PO#'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'150px'" [editable]="false" >
+                            </igx-column>
+                            <igx-column [field]="'deliveryRef'" [header]="'Delivery Ref'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'150px'" [editable]="false" >
+                            </igx-column>
+                            <igx-column [field]="'article'" [header]="'Article'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'250px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'150px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'100px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'uom'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'100px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'deliveryDate'" [header]="'Del Date'" [resizable]="true" [dataType]="'date'"
+                                [sortable]="true" [pipeArgs]="formatDateOptions" [width]="'120px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'delQty'" [header]="'DelQty'" [resizable]="true" [dataType]="'number'" [sortable]="true"
+                                [width]="'100px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'price'" [header]="'Price'" [resizable]="true" [dataType]="'number'" [sortable]="true"
+                                [width]="'100px'" [editable]="false">
+                            </igx-column>
+                        </igx-grid>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+            </div>
+        </div>
+    </div>
+</div>
+
+<igx-dialog #deletedialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="deletedialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKSelected($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>

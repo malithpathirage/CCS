@@ -1,0 +1,323 @@
+<div class="card card-default">
+
+    <div class="card-body">
+        <form [formGroup]="stockAdjForm" autocomplete="off">
+            <div class="row">
+                <div class="col-10">
+                    <h6 class="bg-secondary">
+                        Stock Adjustment
+                    </h6>
+                </div>
+                <div class="col-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success mr-1" [disabled]="!stockAdjForm.valid" data-toggle="tooltip"
+                            data-placement="bottom" (click)="this.savedialog.open()" title="Save">
+                            <i class="fas fa-save"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Clear">
+                            <i class="fas fa-redo" (click)="refreshControler()"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Site *</label>
+                        <igx-combo #site id="site" class="combo" displayKey="siteName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="siteList" placeholder="Site"
+                            (onSelectionChange)="singleSelection($event)" formControlName="site"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-sm-1 mt-4">
+                    <div class="btn-group">
+                        <button [disabled]="isStockAdj && saveButton" type="button" class="btn btn-info mr-1" (click)="addArticle()" data-toggle="tooltip"
+                            data-placement="bottom" title="Add">
+                            <i class="fa fa-search-plus"></i>
+                        </button>
+
+                        <button [disabled]="isNew && updateButton" type="button" class="btn btn-info mr-1" (click)="editStock()" data-toggle="tooltip"
+                            data-placement="bottom" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <form [formGroup]="stockAdjDetForm" autocomplete="off">
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="bg-secondary">
+                        Stock Adjustment Details
+                    </h6>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="articleName" readonly />
+                            <label igxLabel for="articleName"> Article Name <span class="text-danger"> * </span> </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="articleCode" readonly />
+                            <label igxLabel for="articleCode"> Article Code <span class="text-danger"> * </span> </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Color <span class="text-danger"> * </span> </label>
+                        <igx-combo #color class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="colorList" placeholder="Color" (onSelectionChange)="singleSelection($event)"
+                            formControlName="color" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Size <span class="text-danger"> * </span> </label>
+                        <igx-combo #size class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="sizeList" placeholder="Size" (onSelectionChange)="singleSelection($event)"
+                            formControlName="size" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="uom" readonly />
+                            <label igxLabel for="uom"> UOM </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="stockQty" />
+                            <label igxLabel for="stockQty"> Stock Qty </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="correction" />
+                            <label igxLabel for="correction"> Correction </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="price" />
+                            <label igxLabel for="price"> Unit Price </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="group">
+                        <igx-date-picker id="expiryDate" formControlName="expiryDate">
+                            <label igxLabel>Expiry Date </label>
+                        </igx-date-picker>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="remarks" />
+                            <label igxLabel for="remarks"> Remarks </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-3" *ngIf="isStockAdj">
+                    <div class="form-group">
+                        <label> Reason <span class="text-danger"> * </span> </label>
+                        <igx-combo #reason class="combo" displayKey="reason" valueKey="reasonId" [itemsMaxHeight]="250"
+                            [data]="reasonList" placeholder="Reason" (onSelectionChange)="singleSelection($event)"
+                            formControlName="reason" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-sm-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success mr-1" [disabled]="!stockAdjDetForm.valid"
+                            data-toggle="tooltip" data-placement="bottom" title="Save" (click)="addArticleRow()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                            title="Clear" (click)="clearDetailsControls()">
+                            <i class="fas fa-broom"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <igx-grid #stockAdjGrid [data]="stockAdjList" [autoGenerate]="false" [paging]="true" [rowEditable]="false" 
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100" 
+                        height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" 
+                        [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+                        <igx-column field="status" [header]="' '" [width]="'100px'" [selectable]="false"
+                            [sortable]="false" [resizable]="false" [editable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onDetailsEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                                <button igxButton="icon" class="fab-compact" (click)="openDeleteDialog($event,cell.cellID)">
+                                    <igx-icon family="material">delete</igx-icon>
+                                </button>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'articleName'" [header]="'Article'" [resizable]="true"
+                            [dataType]="'string'" [width]="'250px'" [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <igx-column [field]="'articleCode'" [header]="'Stock Code'" [resizable]="true" [dataType]="'string'" 
+                            [width]="'130px'" [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'"
+                            [width]="'100px'" [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'"
+                            [width]="'90px'" [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <igx-column [field]="'unit'" [header]="'UOM'" [resizable]="true" [dataType]="'string'"
+                            [width]="'90px'" [sortable]="true" [editable]="false">
+                        </igx-column>
+                        <igx-column [field]="'stockQty'" [header]="'Stock Qty'" [resizable]="true" [dataType]="'number'"
+                            [width]="'120px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'correction'" [header]="'Correction'" [resizable]="true" [dataType]="'number'"
+                            [width]="'120px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'price'" [header]="'Price'" [resizable]="true" [dataType]="'number'"
+                            [width]="'120px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'expiryDate'" [header]="'Expiry Date'" [resizable]="true" [width]="'120px'" 
+                            [sortable]="true" [editable]="true" [dataType]="'date'" [pipeArgs]="formatDateOptions">
+                        </igx-column>
+                        <igx-column [field]="'remarks'" [header]="'Remarks'" [resizable]="true"
+                            [dataType]="'text'" [width]="'200px'" [sortable]="true" [editable]="true">
+                        </igx-column> 
+                        <igx-column [field]="'reason'" [header]="'Reason'" [resizable]="true"
+                            [dataType]="'text'" [width]="'200px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'autoId'" [header]="''" [resizable]="false" [dataType]="'number'"
+                            [width]="'0px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'colorId'" [header]="''" [resizable]="false" [dataType]="'number'"
+                            [width]="'0px'" [sortable]="true" [editable]="true">
+                        </igx-column>
+                        <igx-column [field]="'sizeId'" [header]="''" [resizable]="false" [dataType]="'number'"
+                            [width]="'0px'" [sortable]="true" [editable]="true">
+                        </igx-column>   
+                        <igx-column [field]="'reasonId'" [header]="''" [resizable]="false" [dataType]="'number'"
+                            [width]="'0px'" [sortable]="true" [editable]="true">
+                        </igx-column>                   
+                    </igx-grid>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<igx-dialog #dialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="dialog.close()"
+  rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKSelected($event)"
+  message="Are you sure you want to delete the record ?">
+</igx-dialog>
+
+<igx-dialog #savedialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="savedialog.close()"
+  rightButtonLabel="OK" (onRightButtonSelect)="onSaveSelected($event)"
+  message="Do you want to save the record ?">
+</igx-dialog>
+
+<igx-dialog #articleDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            Article List
+        </h5>
+        <div igxButton class="col-md-1" (click)="articleDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+    <app-invent-article-list (articleEvent)="addNewArticle($event)"></app-invent-article-list>
+</igx-dialog>
+
+<igx-dialog #stockDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            Stock List
+        </h5>
+        <div igxButton class="col-md-1" (click)="stockDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <div class="row">
+        <igx-hierarchical-grid #curentStockGrid [data]="curentStockList" [autoGenerate]="false" [paging]="true"
+            [rowEditable]="false" [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)"
+            [perPage]="100" height="500px" displayDensity="compact" width="1200px" [allowFiltering]="true"
+            [filterMode]="'excelStyleFilter'" [rowSelection]="'Single'">
+            <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" class="fab-compact" (click)="selectStock($event,cell.cellID)">
+                        <igx-icon family="material">check_circle</igx-icon>
+                    </button>
+                </ng-template>
+            </igx-column>
+            <igx-column [field]="'stockCode'" [header]="'Stock Code'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                [width]="'120px'">
+            </igx-column>
+            <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true" [width]="'250px'">
+            </igx-column>
+            <igx-column [field]="'description1'" [header]="'Description1'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true" [width]="'150px'">
+            </igx-column>
+            <igx-column [field]="'description2'" [header]="'Description2'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true" [width]="'150px'">
+            </igx-column>
+            <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                [width]="'90px'">
+            </igx-column>
+            <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                [width]="'80px'">
+            </igx-column>
+            <igx-column [field]="'unitCode'" [header]="'Unit'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                [width]="'80px'">
+            </igx-column>
+            <igx-column [field]="'measurement'" [header]="'Measurement'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true" [width]="'90px'">
+            </igx-column>
+            <igx-column [field]="'stockQty'" [header]="'Stock Qty'" [resizable]="true" [dataType]="'number'" [sortable]="true"
+                [width]="'120px'">
+            </igx-column>
+            <igx-column [field]="'price'" [header]="'Price'" [resizable]="true" [dataType]="'number'" [sortable]="true"
+                [width]="'120px'">
+            </igx-column>
+        </igx-hierarchical-grid>
+    </div>
+</igx-dialog>

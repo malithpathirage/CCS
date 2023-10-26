@@ -1,0 +1,101 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Serial Number</h3>
+    </div>
+
+    <form [formGroup]="serialNoForm" (ngSubmit)="serialNoForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="transType" />
+                            <label igxLabel for="transType">  Trans. Type </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="prefix" />
+                            <label igxLabel for="prefix"> Prefix </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="seqLength" />
+                            <label igxLabel for="seqLength"> Seq Length</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="seqNo" />
+                            <label igxLabel for="seqNo"> Seq No</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-2">
+                    <div class="form-group">     
+                         <ngy-year-picker id="year-picker1" formControlName="currentYear"></ngy-year-picker>          
+                        <input igxInput type="number" formControlName="seqNo" />
+                        <label igxLabel for="seqNo"> Seq No</label>
+                    </div>
+                </div> -->
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <button type="button" [disabled]="!serialNoForm.valid" (click)="saveSerialNo()"
+                                class="btn btn-success mr-3"> <i class="fas fa-save"></i> </button>
+                       
+                            <button type="button" class="btn btn-default" (click)="clearControls()"> 
+                                <i class="fas fa-broom"></i> </button>
+                        </div>
+                    </div>                   
+                </div>        
+            </div>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <igx-grid #SerialNoGrid [data]="serialNoList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="25"
+                        height="500px" displayDensity="compact" [allowFiltering]="true"
+                        [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                        <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'transType'" [header]="'Trans Type'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>                       
+                        <igx-column [field]="'prefix'" [header]="'Prefix'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'seqLength'" [header]="'Seq Length'" [resizable]="true" [dataType]="'number'"
+                        [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'seqNo'" [header]="'SeqNo'" [resizable]="true" [dataType]="'number'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'currentYear'" [header]="'Current Year'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>                       
+                       
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+

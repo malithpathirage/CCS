@@ -1,0 +1,72 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Color Card</h3>
+        <div class="card-tools">       
+            <!-- <button igxButton="icon" class="fab-compact" (click)="SaveColorCard()">
+                <igx-icon family="material">add_box</igx-icon>
+            </button> -->
+        </div>
+    </div>
+
+    <form [formGroup]="MstrColorCrd" (ngSubmit)="MstrColorCrd.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="Name" />
+                            <label igxLabel for="Name"> Name</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="cancelMenuList()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!MstrColorCrd.valid" (click)="SaveColorCard()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <igx-grid #MstrCCgrid [data]="CCardList" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'autoId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="10" height="500px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'Single'">
+
+                        <igx-column [width]="'100px'" field="isActive" [header]="' '"  [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)" [disabled]="!cell.value">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                                <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="Active($event ,cell.cellID)">
+                                        <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                                    </button>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="Deactive($event ,cell.cellID)">
+                                        <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </igx-column>        
+                        
+                        <igx-column [field]="'name'" [header]="'Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'isActive'" [width]="'100px'" [header]="'IsActive'" [resizable]="true"
+                            [dataType]="'boolean'" [sortable]="true">
+                        </igx-column>
+                       
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

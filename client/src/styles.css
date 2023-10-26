@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+body,.form-control,.btn {
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+.modal-body {
+    padding: 0.7rem;
+}
+
+.igx-input-group__bundle {
+    padding-top: 1rem;
+}
+.modal-header {
+    padding: 0.75rem;
+}
+.card-body {
+    padding: 0.75rem;
+}
+/* option {
+    
+    padding: 5px 5px 5px;
+} */
+
+.igx-input-group__input, .igx-input-group__textarea {
+    height: 1.5rem;
+    border-top: .12rem solid transparent;
+}
+
+.igx-input-group--box .igx-input-group__bundle-main, .igx-input-group--border .igx-input-group__bundle-main, .igx-input-group--indigo .igx-input-group__bundle-main, .igx-input-group--search .igx-input-group__bundle-main {
+    padding-top: 0.5rem;
+}
+
+.igx-checkbox__composite {
+    width: 1.2em;
+    height: 1.2em;
+    min-width: 1.2em;
+    border-width: .1.2em;    
+}
+
+.igx-input-group igx-prefix, .igx-input-group--focused igx-prefix, .igx-input-group [igxPrefix], .igx-input-group--focused [igxPrefix], .igx-input-group igx-suffix, .igx-input-group--focused igx-suffix, .igx-input-group [igxSuffix], .igx-input-group--focused [igxSuffix] {
+    height: 1.5rem;
+}
+
+[class*=sidebar-dark-] {
+    background-color: #366ca1;
+}
+
+/* .navbar-white {
+    background-color: #366ca1;
+    color: #1f2d3d;
+} */
+
+.navbar-light .navbar-nav .nav-link {
+    color: rgb(0 0 0);
+}
+
+[class*=sidebar-dark-] .sidebar a {
+    color: #ffffff;
+}
+
+.igx-grid__thead-title, .igx-grid__th, .igx-grid__td {   
+    padding: 0 0.9rem;
+    line-height: 0.8rem;
+}
+
+.igx-grid__thead-title, .igx-grid__th, .igx-grid__td {
+    padding: 0 0.5rem;
+    line-height: 0.9rem;
+}
+
+.dropdown-menu {
+    font-size: 0.75rem;
+    min-width: 12rem;
+}
+
+label:not(.form-check-label):not(.custom-file-label) {
+    font-weight: 600;
+}
+
+.igx-input-group--disabled .igx-input-group__input, .igx-input-group--disabled .igx-input-group__file-input, .igx-input-group--disabled.igx-input-group--required .igx-input-group__input, .igx-input-group--disabled.igx-input-group--required .igx-input-group__file-input, .igx-input-group--indigo.igx-input-group--disabled .igx-input-group__input, .igx-input-group--indigo.igx-input-group--disabled .igx-input-group__file-input {
+    color: rgb(18 0 0 / 65%) !important;
+}
+
+.igx-input-group input, .igx-input-group--focused input, .igx-input-group textarea, .igx-input-group--focused textarea, .igx-input-group span, .igx-input-group--focused span {
+    font-weight: 600;
+}
+
+.igx-checkbox__label {
+    font-weight: 600;
+}
+
+.igx-drop-down__inner {
+    font-weight: 600;
+}
+
+.input-group-text {
+    font-size: 0.75rem;
+    
+}
+
+.custom-select {
+    font-size: 0.75rem;
+}
+
+element.style {
+    height: 47px;
+}
+
+/* .brand-link {
+    line-height: 1.2;
+} */
+
+.icon-red {
+    color: rgb(197, 13, 99);
+}
+
+.icon-green {
+    color: rgb(71, 218, 83);
+}
+
+.icon-blue {
+    color: rgb(9, 171, 247);
+}
+
+.nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.fad, .nav-sidebar>.nav-item .nav-icon.fal, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.ion, .nav-sidebar>.nav-item .nav-icon.svg-inline--fa {
+    font-size: 0.75rem;
+}
+
+p {
+    margin-bottom: 0.5rem;
+}
+
+.igx-dialog__window-title {
+    padding: 1rem 1rem .25rem 1rem;
+}
+
+.igx-button, .igx-button--flat, .igx-button--raised, .igx-button--outlined {   
+    min-width: 0.5rem;   
+    min-height: 2.25rem;   
+}
+
+igx-radio {
+    margin: 8px;
+}
+
+.col-5-1 {
+    width: 20%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.recipe-right-column {
+    width: 20%;
+}
+
+.recipe-left-column {
+    width: 80%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+igc-trial-watermark {
+    display: none;
+}
+
+.col-1-5 {
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 12.5%;
+}
+
+.add-step-button {
+    width: auto;
+    background-color: #cc0db3;
+    border: #cc0db3;
+    color: #ffffff;
+}

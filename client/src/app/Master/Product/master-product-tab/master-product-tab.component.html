@@ -1,0 +1,103 @@
+<section class="content">
+    <!-- <div class="container-fluid"> -->
+        <!-- <div class="col-12"> -->
+            <div class="card card-default card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+
+                        <li class="nav-item" *ngIf="product">
+                            <a class="nav-link active" id="custom-tabs-product-tab" data-toggle="pill" href="#product-product-tab" 
+                                role="tab" aria-controls="product-product-tab" aria-selected="true"> Products</a>
+                        </li>                        
+
+                        <li class="nav-item" *ngIf="prodType">
+                            <a class="nav-link " id="custom-tabs-type-tab" data-toggle="pill" href="#product-type-tab" 
+                                role="tab" aria-controls="product-type-tab" aria-selected="false"> Type</a>
+                        </li>
+                        <li class="nav-item" *ngIf="prodGroup">
+                            <a class="nav-link" id="custom-tabs-group-tab" data-toggle="pill" href="#product-group-tab"
+                                role="tab" aria-controls="product-group-tab" aria-selected="false">Group</a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="subCateory">
+                            <a class="nav-link" id="custom-tabs-category-tab" data-toggle="pill" href="#sub-category-tab"
+                                role="tab" aria-controls="sub-category-tab" aria-selected="false">Sub Category</a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="specialCategory">
+                            <a class="nav-link" id="custom-tabs-category-tab" data-toggle="pill" href="#special-category-tab"
+                                role="tab" aria-controls="special-category-tab" aria-selected="false">Category</a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="assignType">
+                            <a class="nav-link" id="custom-tabs-assignpt-tab" data-toggle="pill" href="#product-assignpt-tab"
+                                role="tab" aria-controls="product-assignpt-tab" aria-selected="false">Assign Product Type</a>
+                        </li>  
+                        <li class="nav-item" *ngIf="assignGroup">
+                            <a class="nav-link" id="custom-tabs-assignpg-tab" data-toggle="pill" href="#product-assignpg-tab"
+                                role="tab" aria-controls="product-assignpg-tab" aria-selected="false">Assign Product Group</a>
+                        </li>
+                        
+                        <li class="nav-item" *ngIf="assignSubCat">
+                            <a class="nav-link" id="custom-tabs-category-tab" data-toggle="pill" href="#assign-category-tab"
+                                role="tab" aria-controls="assign-category-tab" aria-selected="false">Assign Sub Category</a>
+                        </li>
+
+                        <li class="nav-item" *ngIf="assignMainCat">
+                            <a class="nav-link" id="custom-tabs-main-category-tab" data-toggle="pill" href="#assign-main-category-tab"
+                                role="tab" aria-controls="assign-main-category-tab" aria-selected="false">Assign Category</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="custom-tabs-four-tabContent">
+
+                    <div class="tab-pane fade show active" id="product-product-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-product-tab">
+                        <app-master-prod></app-master-prod>
+                    </div>                    
+
+                    <div class="tab-pane fade " id="product-type-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-type-tab">
+                        <app-master-prod-type></app-master-prod-type>
+                    </div>
+
+                    <div class="tab-pane fade" id="product-group-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-group-tab">
+                        <app-master-prod-group></app-master-prod-group>
+                    </div>
+
+                    <div class="tab-pane fade" id="sub-category-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-category-tab">
+                        <app-sub-category></app-sub-category>
+                    </div>
+
+                    <div class="tab-pane fade" id="special-category-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-category-tab">
+                        <app-special-category></app-special-category>
+                    </div>
+                    
+                    <div class="tab-pane fade" id="product-assignpt-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-assignpt-tab">
+                        <app-assign-prodtype-cat></app-assign-prodtype-cat>
+                    </div>
+                    <div class="tab-pane fade" id="product-assignpg-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-assignpg-tab">
+                        <app-assign-prodgroup-type></app-assign-prodgroup-type>
+                    </div>
+
+                    <div class="tab-pane fade" id="assign-category-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-category-tab">
+                        <app-assign-category></app-assign-category>
+                    </div>
+
+                    <div class="tab-pane fade" id="assign-main-category-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-main-category-tab">
+                        <app-assign-main-category></app-assign-main-category>
+                    </div>
+                    <!-- /.modal -->
+                </div>
+            </div>
+        <!-- </div> -->
+    <!-- </div>  -->
+    <!-- /.container-fluid -->
+</section>

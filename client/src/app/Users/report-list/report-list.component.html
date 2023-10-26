@@ -1,0 +1,123 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">List of Report</h3>
+        <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+    <form [formGroup]="reportListForm" (ngSubmit)="reportListForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Module * </label>
+                        <igx-combo id="module" class="combo" displayKey="module" valueKey="module"
+                            [itemsMaxHeight]="250" [data]="moduleList" placeholder="Module" (onSelectionChange)="onModuleSelect($event)"
+                            (onSelectionChange)="singleSelection($event)" formControlName="module"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>                    
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="reportName" />
+                            <label igxLabel for="reportName"> Report Name</label>
+                        </igx-input-group>
+                    </div>                   
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="ssrsReportName" />
+                            <label igxLabel for="ssrsReportName"> SSRS Report Name</label>
+                        </igx-input-group>
+                    </div>
+                </div> 
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkFromDate formControlName="fromDate" >
+                            From Date
+                        </igx-checkbox>
+                    </div>
+                </div> 
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkToDate formControlName="toDate" >
+                            To Date
+                        </igx-checkbox>
+                    </div>
+                </div>  
+
+                <div class="form-group">
+                    <button type="button" (click)="saveReportList()" [disabled]="!reportListForm.valid"
+                        igxButton="raised" igxButtonBackground="#72da66" igxRipple><i class="fas fa-save"></i>
+                    </button>
+                    <button type="button" (click)="refreshReport()" igxButton="flat"> <i class="fas fa-broom"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="purpose" />
+                            <label igxLabel for="purpose"> Purpose</label>
+                        </igx-input-group>
+                    </div>
+                </div> 
+            </div>
+
+            <div class="row">
+                <igx-grid #reportGrid [data]="reportList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500"
+                    height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                    [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+                    <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                        <ng-template igxCell let-cell="cell">
+                            <button igxButton="icon" class="fab-compact" (click)="onReportEdit($event,cell.cellID)">
+                                <igx-icon family="material">edit</igx-icon>
+                            </button>
+                        </ng-template>
+                    </igx-column>
+                    <igx-column [field]="'autoId'" [header]="'ID'" [resizable]="true" [dataType]="'number'"
+                        [width]="'50px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'module'" [header]="'Module'" [resizable]="true" [dataType]="'string'"
+                        [width]="'120px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'reportNo'" [header]="'Report No'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true" [width]="'110px'">
+                    </igx-column>
+                    <igx-column [field]="'reportName'" [header]="'Report Name'" [resizable]="true" [dataType]="'string'"
+                        [width]="'180px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'ssrsReportName'" [header]="'SSRS ReportName'" [resizable]="true" [dataType]="'string'"
+                        [width]="'200px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'fromDate'" [header]="'From Date'" [resizable]="true" [dataType]="'boolean'" 
+                        [width]="'120px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'toDate'" [header]="'To Date'" [resizable]="true" [dataType]="'boolean'" 
+                        [width]="'120px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'purpose'" [header]="'Purpose'" [resizable]="true" [dataType]="'string'"
+                        [width]="'300px'" [sortable]="true">
+                    </igx-column>
+                </igx-grid>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,73 @@
+<div class="card-body">
+  <form [formGroup]="articleForm">
+      <div class="row">                
+          <div class="col-md-2">
+              <div class="form-group">
+                  <label>Category *</label>
+                  <igx-combo #category id="category" class="combo" displayKey="name" valueKey="autoId"
+                      [itemsMaxHeight]="250" [data]="categoryList" placeholder="Category"
+                      (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                      formControlName="category" searchPlaceholder="Search...">
+                  </igx-combo>
+              </div>
+          </div>
+      
+          <div class="col-md-2">
+              <div class="form-group">
+                  <label>Product Type *</label>
+                  <igx-combo #prodType id="prodType" class="combo" displayKey="prodTypeName" valueKey="autoId" [itemsMaxHeight]="250"
+                      [data]="prodTypeList" placeholder="Product Type" (onSelectionChange)="singleSelection($event)"
+                      (onSelectionChange)="onSelectProdType($event)" formControlName="prodType" searchPlaceholder="Search...">
+                  </igx-combo>
+              </div>
+          </div>
+      
+          <div class="col-md-2">
+              <div class="form-group">
+                  <label>Product Group *</label>
+                  <igx-combo #prodGroup id="prodGroup" class="combo" displayKey="prodGroupName" valueKey="autoId"
+                      [itemsMaxHeight]="250" [data]="prodGroupList" placeholder="Product Group"
+                      (onSelectionChange)="singleSelection($event)" formControlName="prodGroup"
+                      (onSelectionChange)="onSelectProdGroup($event)" searchPlaceholder="Search...">
+                  </igx-combo>
+              </div>
+          </div>              
+      </div> 
+      <div class="row">
+          <igx-grid #articleGrid [data]="articleList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+              [primaryKey]="'stockId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+              height="500px" displayDensity="compact" [allowAdvancedFiltering]="true"
+              [filterMode]="'excelStyleFilter'" [rowSelection]="'Single'">
+              <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                  <ng-template igxCell let-cell="cell">
+                      <button igxButton="icon" class="fab-compact" (click)="selectArticle($event,cell.cellID)">
+                          <igx-icon family="material">check_circle</igx-icon>
+                      </button>
+                  </ng-template>
+              </igx-column>
+              <igx-column [field]="'stockCode'" [header]="'Stock Code'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                  [width]="'150px'">
+              </igx-column>
+              <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'grnNo'" [header]="'GRN No'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'grnDate'" [header]="'GRN Date'" [resizable]="true" [dataType]="'date'"
+                [pipeArgs]="formatDateOptions" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'mrNo'" [header]="'MR No'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <igx-column [field]="'indentNo'" [header]="'Indent No'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column>
+              <!-- <igx-column [field]="'measurement'" [header]="'Measurement'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+              </igx-column> -->
+              <igx-column [field]="'stockQty'" [header]="'Stock Qty'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+              </igx-column>              
+          </igx-grid>
+      </div>
+    </form>
+</div>

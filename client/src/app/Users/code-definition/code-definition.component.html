@@ -1,0 +1,224 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Code Definition</h3>
+        <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+    <form [formGroup]="codeDefForm" (ngSubmit)="codeDefForm.valid" autocomplete="off">
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Category </label>
+                        <igx-combo #category id="category" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="categoryList" placeholder="Category"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                            formControlName="category" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Product Type </label>
+                        <igx-combo #prodType id="prodType" class="combo" displayKey="prodTypeName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="prodTypeList" placeholder="Product Type"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectProdType($event)"
+                            formControlName="prodType" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Product Group </label>
+                        <igx-combo #prodGroup id="prodGroup" class="combo" displayKey="prodGroupName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="prodGroupList" placeholder="Product Group"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectProductGroup($event)" 
+                            formControlName="prodGroup" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkIsProdField formControlName="isProdField" (change)="onChangeProdField($event)" >
+                            Is ProdField
+                        </igx-checkbox>
+                    </div>
+                </div>               
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Field Name </label>
+                        <igx-combo #cmbFieldName id="fieldName" class="combo" displayKey="flexFieldName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="fieldList" placeholder="Field Name"
+                            (onSelectionChange)="singleSelection($event)" formControlName="fieldName"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <igx-radio-group name="display" formControlName="display">
+                        <igx-radio class="radio-sample" value="c">
+                           IsCode
+                        </igx-radio>
+                        <igx-radio class="radio-sample" value="n">
+                            IsName
+                         </igx-radio>
+                    </igx-radio-group>
+                </div>             
+
+            </div>
+
+            <div class="row">
+                <!-- <div class="col-md-2">
+                    <igx-radio-group name="numbering" formControlName="numbering" (change)="onChangeValue($event)">
+                        <igx-radio class="radio-sample" value="c" >
+                           IsCounter
+                        </igx-radio>
+                        <igx-radio class="radio-sample" value="v">
+                            IsValue
+                         </igx-radio>
+                    </igx-radio-group>
+                </div> -->
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkIsCounter formControlName="isCounter" (change)="onChangeValue($event)" >
+                            IsCounter
+                        </igx-checkbox>
+                    </div>
+                </div>   
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkIsValue formControlName="isValue" >
+                            IsValue
+                        </igx-checkbox>
+                    </div>
+                </div>   
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number"  formControlName="counterPad"/>
+                            <label igxLabel > Counter Pad </label>
+                        </igx-input-group>
+                    </div>
+                </div> 
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number"  formControlName="counterStart"/>
+                            <label igxLabel > Counter Start </label>
+                        </igx-input-group>
+                    </div>
+                </div>  
+
+                <!-- <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number"  formControlName="seqNo"/>
+                            <label igxLabel > Seq No </label>
+                        </igx-input-group>
+                    </div>
+                </div>  -->
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-checkbox #chkIsSeperator checked="false" formControlName="isSeperator" (change)="onChangeSeperator($event)">
+                            Is Seperator
+                        </igx-checkbox>
+                    </div>
+                </div> 
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text"  formControlName="seperator"/>
+                            <label igxLabel > Seperator </label>
+                        </igx-input-group>
+                    </div>
+                    <div class="text-danger" *ngIf="codeDefForm.errors?.invalid"> Seperator is required</div>
+                </div> 
+
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="clearControls()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!codeDefForm.valid" (click)="saveCodeDefinition()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>      
+            </div>
+
+            <div class="row">
+                <igx-grid #codeDefGrid [data]="codeDefList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10" height="500px"
+                    displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'Single'">
+                
+                    <igx-column [width]="'100px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                        <ng-template igxCell let-cell="cell">
+                            <button igxButton="icon" class="fab-compact" (click)="onEditCodeDef($event,cell.cellID)">
+                                <igx-icon family="material">edit</igx-icon>
+                            </button>
+                            <button igxButton="icon" class="fab-compact" (click)="openDeleteDialog($event,cell.cellID)">
+                                <igx-icon family="material">delete</igx-icon>
+                            </button>
+                        </ng-template>                       
+                    </igx-column>
+                    <igx-column [field]="'sortOrder'" [header]="'SortOrder'" [resizable]="true" [dataType]="'number'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isProductField'" [header]="'IsProductFeild'" [resizable]="true" [dataType]="'boolean'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'fieldName'" [header]="'Field Name'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isCode'" [header]="'IsCode'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isName'" [header]="'IsName'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isCounter'" [header]="'IsCounter'" [resizable]="true" [dataType]="'boolean'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isValue'" [header]="'IsValue'" [resizable]="true" [dataType]="'boolean'"
+                    [sortable]="true">
+                </igx-column>
+                    <igx-column [field]="'counterPad'" [header]="'CounterPad'" [resizable]="true" [dataType]="'number'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'counterStart'" [header]="'CounterStart'" [resizable]="true" [dataType]="'number'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'seqNo'" [header]="'Seq No'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'isSeperator'" [header]="'IsSeperator'" [resizable]="true" [dataType]="'boolean'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'seperator'" [header]="'Seperator'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                    </igx-column>
+                </igx-grid>
+            </div>
+        </div>
+    </form>
+</div>
+
+<igx-dialog #dialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="dialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKSelected($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>

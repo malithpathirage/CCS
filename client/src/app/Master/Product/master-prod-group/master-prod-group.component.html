@@ -1,0 +1,85 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Product Group</h3>
+    </div>
+
+    <form [formGroup]="prodGroupForm" (ngSubmit)="prodGroupForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="prodGroupCode" />
+                            <label igxLabel for="prodGroupCode"> Group Code</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="prodGroupName" />
+                            <label igxLabel for="prodGroupName"> Group Name</label>
+                        </igx-input-group>
+                    </div>
+                </div>                
+
+                <div class="col-md-1 offset-md-4">
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <button type="button" [disabled]="!prodGroupForm.valid" (click)="saveProductGroup()"
+                                class="btn btn-success mr-3"> <i class="fas fa-save"></i> </button>
+                       
+                            <button type="button" class="btn btn-default" (click)="clearControls()"> 
+                                <i class="fas fa-broom"></i> </button>
+                        </div>
+                    </div>                   
+                </div>                
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <igx-grid #ProdGroupGrid [data]="prodGroupList" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'autoId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="10" height="500px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'Single'">
+
+                        <igx-column field="isActive" [header]="' '" [width]="'60px'" [selectable]="false" [sortable]="false"
+                            [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <!-- <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button> -->
+                                <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                                        <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                                    </button>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                    <button igxButton="icon" class="fab-compact"
+                                        (click)="deactive($event ,cell.cellID)">
+                                        <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'prodGroupCode'" [header]="'Group Code'" [resizable]="true" [dataType]="'string'" 
+                                [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'prodGroupName'" [header]="'Group Name'" [resizable]="true" [dataType]="'string'" 
+                                [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'serialNo'" [header]="'Serial No'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- /.modal -->

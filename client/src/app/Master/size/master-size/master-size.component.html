@@ -1,0 +1,97 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Size</h3>
+        <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+    <form [formGroup]="mstrSize" (ngSubmit)="mstrSize.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <!-- <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Size Card </label>
+                        <igx-combo id="colorCard" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="sizeCardList" placeholder="Size Card"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)='loadGridDetails($event)'
+                            formControlName="LinkSizeCard" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div> -->
+
+                <!-- <div class="col-md-1">
+                    <div class="form-group">
+                        <button igxButton="icon" (click)="refreshPage()">
+                            <igx-icon>loop</igx-icon>
+                        </button>
+                    </div>
+                </div> -->
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="Code" />
+                            <label igxLabel for="Code"> Code</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="Name" />
+                            <label igxLabel for="Name"> Name</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="resetControls()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!mstrSize.valid" (click)="saveSize()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <igx-grid #sizeGrid [data]="sizeList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+                        height="500px" displayDensity="compact" [allowFiltering]="true"
+                        [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                        <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'code'" [header]="'Code'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'name'" [header]="'Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <!-- <igx-column [field]="'LinkSizeCard'" [header]="'Size Card'" [resizable]="true"
+                        [dataType]="'string'" [sortable]="true">
+                    </igx-column> -->
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" id="modalSCard">
+    <app-master-size-card></app-master-size-card>
+</div>
+<!-- /.modal -->

@@ -1,0 +1,35 @@
+<section class="content">
+    <div class="card card-default card-outline card-tabs">
+
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                <li class="nav-item" *ngIf="supHeader">
+                    <a class="nav-link active" id="custom-tabs-header-tab" data-toggle="pill" href="#supplier-header-tab" 
+                        role="tab" aria-controls="supplier-header-tab" aria-selected="true">Header</a>
+                </li>
+                <li class="nav-item" *ngIf="supCurrency">
+                    <a class="nav-link" id="custom-tabs-currency-tab" data-toggle="pill" href="#supplier-currency-tab" 
+                        role="tab" aria-controls="supplier-currency-tab" aria-selected="false">Currency</a>
+                </li>
+                <li class="nav-item" *ngIf="supAddress">
+                    <a class="nav-link" id="custom-tabs-address-tab" data-toggle="pill" href="#supplier-address-tab" 
+                        role="tab" aria-controls="supplier-address-tab" aria-selected="false">AddressList</a>
+                </li>    
+            </ul>
+        </div>
+        <div class="tab-content" id="custom-tabs-two-tabContent">
+            <div class="tab-pane fade show active" id="supplier-header-tab" role="tabpanel"
+                aria-labelledby="custom-tabs-header-tab">
+                <app-supplier-header></app-supplier-header>
+            </div>
+            <div class="tab-pane fade" id="supplier-currency-tab" role="tabpanel"
+                aria-labelledby="custom-tabs-currency-tab">
+                <app-supplier-currency></app-supplier-currency>
+            </div>
+            <div class="tab-pane fade" id="supplier-address-tab" role="tabpanel"
+                aria-labelledby="custom-tabs-address-tab">
+                <app-supplier-address></app-supplier-address>
+            </div>
+        </div>
+    </div>
+</section>

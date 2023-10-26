@@ -1,0 +1,152 @@
+<div class="card-header">
+    <h3 class="card-title">Customer Users</h3>
+    <!-- <div class="card-tools">
+        <button igxButton="icon" class="fab-compact" (click)="clearCustomerUser()" data-toggle="modal"
+            data-target="#modalUser">
+            <igx-icon family="material">add_box</igx-icon>
+        </button>
+    </div> -->
+</div>
+
+<div class="card-body">
+    <form [formGroup]="custUserForm" autocomplete="off">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label> Customer </label>
+                    <igx-combo #customerU id="customerUId" class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                        [data]="customerList" placeholder="Customer" (onSelectionChange)="singleSelection($event)"
+                        (onSelectionChange)="onCustomerSelect($event)" formControlName="customerUId"
+                        searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button igxButton="icon" class="fab-compact" (click)="clearCustomerUser()" data-toggle="modal" [disabled]="!isCustomerSel"
+                    data-target="#modalUser">
+                    <igx-icon family="material">add_box</igx-icon>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <igx-grid #customerUserGrid [data]="cusUserList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+            height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+            <igx-column [width]="'100px'" [field]="'isActive'" [header]="' '" [selectable]="false" [sortable]="false" [resizable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" class="fab-compact" (click)="onEditCustomerUser($event,cell.cellID)" [disabled]="!cell.value"
+                        data-toggle="modal" data-target="#modalUser">
+                        <igx-icon family="material">edit</igx-icon>
+                    </button>  
+                    <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                            <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                        </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="deactive($event ,cell.cellID)">
+                            <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                        </button>
+                    </ng-template>                  
+                </ng-template>
+            </igx-column>
+            <igx-column [field]="'title'" [header]="'Title'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'firstName'" [header]="'First Name'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'lastName'" [header]="'Last Name'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'designation'" [header]="'Designation'" [resizable]="true" [dataType]="'string'"
+                [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'email'" [header]="'Email'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column> 
+            <igx-column [field]="'isActive'" [header]="'Is Active'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>                       
+        </igx-grid>
+    </div>
+</div>
+
+<div class="modal fade" id="modalUser">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> {{formTitle}} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="custUserForm" (ngSubmit)="custUserForm.valid" autocomplete="off">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label> Title </label>
+                                    <igx-combo #title id="title" class="combo" displayKey="title" valueKey="title"
+                                        [itemsMaxHeight]="250" [data]="titleList" placeholder="Title"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="title"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="firstName" />
+                                        <label igxLabel for="firstName"> First Name </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="lastName" />
+                                        <label igxLabel for="lastName"> Last Name</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="email" formControlName="email" />
+                                        <label igxLabel for="email"> Email</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="designation" />
+                                        <label igxLabel for="designation"> Designation </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default mr-3" (click)="clearCustomerUser()"
+                        [disabled]="isEditMode">
+                        <i class="fas fa-broom"></i> </button>
+                    <button type="button" class="btn btn-success" [disabled]="!custUserForm.valid"
+                        (click)="saveCustmerUser()">
+                        <i class="fas fa-save"></i> </button>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

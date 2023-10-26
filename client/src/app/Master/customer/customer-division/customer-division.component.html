@@ -1,0 +1,69 @@
+<div class="card-header">
+    <h3 class="card-title">Customer Division</h3>
+</div>
+
+<div class="card-body">
+    <form [formGroup]="custDivisionForm" (ngSubmit)="custDivisionForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Customer </label>
+                        <igx-combo #customerD id="customerDId" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="customerList" placeholder="Customer"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onCustomerSelect($event)"
+                            formControlName="customerDId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="details"/>
+                            <label igxLabel for="details"> Details </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="clearCustomerDivision()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!custDivisionForm.valid" (click)="saveCustomerDivision()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-6">
+        <igx-grid #cusDivisionGrid [data]="cusDivisionList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+            height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+            <igx-column [width]="'100px'" [field]="'bActive'" [header]="' '" [selectable]="false" [sortable]="false" [resizable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" class="fab-compact" (click)="onEditCustomerDivision($event,cell.cellID)">
+                        <igx-icon family="material">edit</igx-icon>
+                    </button>
+                    <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                            <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                        </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="deactive($event ,cell.cellID)">
+                            <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                        </button>
+                    </ng-template>
+                </ng-template>
+            </igx-column>
+            <igx-column [field]="'details'" [header]="'Details'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column> 
+            <igx-column [field]="'bActive'" [header]="'Is Active'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>             
+        </igx-grid>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Ports </h3>
+    </div>
+    <form [formGroup]="masterPortsForm" (ngSubmit)="masterPortsForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text"  formControlName="portCode"/>
+                            <label igxLabel > Port Code </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text"  formControlName="portName"/>
+                            <label igxLabel > Port Name </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-combo #country id="country" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="countryList" placeholder="Country"
+                            formControlName="countryId" (onSelectionChange)="singleSelection($event)"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-checkbox #chkload checked="false" formControlName="portOfLoading" >
+                            Port Of Loading   
+                        </igx-checkbox>
+                    </div>
+                </div> 
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-checkbox #chkdispatch checked="false" formControlName="portOfDischarge" >
+                            Port Of Discharge   
+                        </igx-checkbox>
+                    </div>
+                </div> 
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="resetControls()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!masterPortsForm.valid" (click)="savePorts()">
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>  
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <igx-grid #portgrid [data]="portList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'portId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+                        height="500px" displayDensity="compact" [allowFiltering]="true"
+                        [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                        <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEditPort($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'portId'" [header]="'ID'" [resizable]="true" [dataType]="'number'"
+                        [width]="'50px'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'portCode'" [header]="'Port Code'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'portName'" [header]="'Port Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'country'" [header]="'Country Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'portOfLoading'" [header]="'PortOfLoading'" [resizable]="true" [dataType]="'boolean'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'portOfDischarge'" [header]="'PortOfDischarge'" [resizable]="true" [dataType]="'boolean'"
+                            [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </div>
+        </div> 
+    </form>
+</div>>

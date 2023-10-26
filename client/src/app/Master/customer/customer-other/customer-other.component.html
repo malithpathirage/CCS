@@ -1,0 +1,71 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Customer Other Code Values</h3> 
+    </div> 
+    <form [formGroup]="customerOtherForm" autocomplete="off">
+       <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Customer Name</label> 
+                    <igx-combo #Customer id="customerId" class="combo" displayKey="name" valueKey="autoId"
+                    [itemsMaxHeight]="250" [data]="customerList" placeholder="Customer"
+                    (onSelectionChange)="singleSelection($event)"
+                    formControlName="customerId" searchPlaceholder="Search...">
+                    </igx-combo>
+                    </div>                  
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Customer Other</label> 
+                    <igx-combo #Other id="customerOtherId" class="combo" displayKey="codeHeaderValue" valueKey="autoId"
+                    [itemsMaxHeight]="250" [data]="customerOtherCodeList" placeholder="Customer Other Code"
+                    (onSelectionChange)="singleSelection($event)"(onSelectionChange)="onSelectCustomerOtherCode($event)"
+                    formControlName="customerOtherId" searchPlaceholder="Search...">
+                    </igx-combo>
+                    </div>                  
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text"  formControlName="description"/>
+                            <label igxLabel > Description </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="resetControlls()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" (click)="saveCustomerOther()" >
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7">
+                <igx-grid #CustOther [data]="customerOtherList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'autoId'" cellSelection="none"  [perPage]="10"
+                    height="500px" displayDensity="compact" [allowFiltering]="true"
+                    [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                    <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                        <ng-template igxCell let-cell="cell">
+                            <button igxButton="icon" class="fab-compact" (click)="onEditCustomerOther($event,cell.cellID)">
+                                <igx-icon family="material">edit</igx-icon>
+                            </button>
+                        </ng-template>  
+                    </igx-column>  
+                    <igx-column [width]="'200px'" [field]="'name'" [header]="'Code Name'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>                      
+                    <igx-column [field]="'description'" [header]="'Description'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>
+                </igx-grid>
+            </div>
+        </div>  
+    </form>
+</div>

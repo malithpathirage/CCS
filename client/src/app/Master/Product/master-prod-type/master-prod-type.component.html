@@ -1,0 +1,103 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Product Type </h3>
+    </div>
+
+    <form [formGroup]="prodTypeForm" (ngSubmit)="prodTypeForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <!-- <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Category </label>
+                        <igx-combo id="categoryId" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="CategoryList" placeholder="Select Category"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                            formControlName="categoryId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div> -->
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="prodTypeCode" />
+                            <label igxLabel for="prodTypeCode"> Type Code</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="prodTypeName" />
+                            <label igxLabel for="prodTypeName"> Type Name</label>
+                        </igx-input-group>
+                    </div>
+                </div>                
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-checkbox #chkAutoArticle checked="false" formControlName="bAutoArticle">
+                            Auto Article
+                        </igx-checkbox>
+                    </div>
+                </div>
+
+                <div class="col-md-1 offset-md-2">
+                    <div class="form-group">
+                        <div class="btn-group">
+                            <button type="button" [disabled]="!prodTypeForm.valid" (click)="saveProductType()"
+                                class="btn btn-success mr-3"> <i class="fas fa-save"></i> </button>
+                       
+                            <button type="button" class="btn btn-default" (click)="clearControls()"> 
+                                <i class="fas fa-broom"></i> </button>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <igx-grid #ProdTypGrid [data]="ProdTypList" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'autoId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="10" height="500px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'Single'">
+                        <igx-column field="isActive" [header]="' '" [width]="'100px'" [selectable]="false" [sortable]="false"
+                            [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                                <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                                        <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                                    </button>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                    <button igxButton="icon" class="fab-compact"
+                                        (click)="deactive($event ,cell.cellID)">
+                                        <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'prodTypeName'" [header]="'Product Type Name'" [resizable]="true"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'prodTypeCode'" [header]="'Product Type Code'" [resizable]="true"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'categoryName'" [header]="'Category Name'" [resizable]="true"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'bAutoArticle'" [header]="'Auto Article'" [resizable]="true"
+                            [dataType]="'boolean'" [sortable]="true">
+                        </igx-column>
+
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

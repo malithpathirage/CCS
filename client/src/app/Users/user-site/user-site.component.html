@@ -1,0 +1,121 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">User Site</h3>
+        
+    </div>
+</div>
+
+<form [formGroup]="userSiteForm" (ngSubmit)="userSiteForm.valid" autocomplete="off">
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-sm-1">User Name </label>
+            <div class="col-sm-2">
+                <igx-combo id="users" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                    [itemsMaxHeight]="250" [data]="permitUsers" placeholder="User Name"
+                    (onSelectionChange)='loadSiteEvent($event)' (onSelectionChange)="singleSelection($event)"
+                    formControlName="Agent" searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+            <label class="col-sm-1">Site </label>
+            <div class="col-sm-3">
+                <igx-combo id="sites" class="combo" displayKey="siteName" valueKey="autoId"
+                    [itemsMaxHeight]="250" [data]="SiteList" placeholder="Sites"
+                    (onSelectionChange)="singleSelection($event)"
+                    formControlName="site" searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+            <label class="col-sm-1">Type </label>
+            <div class="col-sm-2">
+                <igx-combo id="sitetypes" class="combo" displayKey="name" valueKey="no"
+                    [itemsMaxHeight]="250" [data]="TypeList" placeholder="Type"
+                    (onSelectionChange)="singleSelection($event)"
+                    formControlName="sitetype" searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-success" (click)="saveSite()" 
+                [disabled]="!userSiteForm.valid">
+                    <i class="fas fa-plus-square"></i> </button>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <font color="blue">
+                    <h2 class="card-title"> Default Site</h2>
+                </font>
+            </div> 
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger"  (click)="deleteUserSite(1)" 
+                [disabled]="!(this.defaultSiteGrid.selectedRows.length>0)" igxRipple>
+                    <i class="fas fa-trash-alt"></i> </button>                    
+            </div>   
+            
+            <div class="col-sm-3">
+                <font color="blue">
+                    <h2 class="card-title"> From Site</h2>
+                </font>
+            </div> 
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger" (click)="deleteUserSite(2)" 
+                [disabled]="!(this.fromSiteGrid.selectedRows.length>0)" igxRipple>
+                    <i class="fas fa-trash-alt"></i> </button>                    
+            </div>   
+
+            <div class="col-sm-3">
+                <font color="blue">
+                    <h2 class="card-title"> To Site</h2>
+                </font>
+            </div> 
+
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-danger" (click)="deleteUserSite(3)"  
+                [disabled]="!(this.toSiteGrid.selectedRows.length>0)" igxRipple>
+                    <i class="fas fa-trash-alt"></i> </button>                    
+            </div>               
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <igx-grid #defaultSiteGrid [data]="defaultSite" [autoGenerate]="false" [paging]="true"
+                    [rowEditable]="false" [primaryKey]="'userSiteId'" cellSelection="none"
+                    (onColumnResized)="onResize($event)" [perPage]="100" height="400px" displayDensity="compact"
+                    [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'multiple'">
+                    <igx-column [field]="'siteName'" [header]="'Site Name'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>
+		        </igx-grid>
+            </div>
+            <div class="col-sm-4">
+                <igx-grid #fromSiteGrid [data]="fromSite" [autoGenerate]="false" [paging]="true"
+                    [rowEditable]="false" [primaryKey]="'userSiteId'" cellSelection="none"
+                    (onColumnResized)="onResize($event)" [perPage]="100" height="400px" displayDensity="compact"
+                    [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'multiple'">
+                    <igx-column [field]="'siteName'" [header]="'Site Name'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>
+		        </igx-grid>
+            </div>
+            <div class="col-sm-4">
+                <igx-grid #toSiteGrid [data]="toSite" [autoGenerate]="false" [paging]="true"
+                    [rowEditable]="false" [primaryKey]="'userSiteId'" cellSelection="none"
+                    (onColumnResized)="onResize($event)" [perPage]="100" height="400px" displayDensity="compact"
+                    [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'multiple'">
+                    <igx-column [field]="'siteName'" [header]="'Site Name'" [resizable]="true" [dataType]="'string'"
+                        [sortable]="true">
+                    </igx-column>
+		        </igx-grid>
+            </div>            
+
+
+        </div>
+    </div>
+</form>

@@ -1,0 +1,43 @@
+<section class="content">
+    <!-- <div class="container-fluid"> -->
+        <!-- <div class="col-12"> -->
+            <div class="card card-default card-outline card-tabs">
+                
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                        <li class="nav-item" *ngIf="brand">
+                            <a class="nav-link active" id="custom-tabs-brand-tab" data-toggle="pill" href="#brand-tab" 
+                                role="tab" aria-controls="brand-tab" aria-selected="true">Brand</a>
+                        </li>
+                        <li class="nav-item" *ngIf="brandCode" >
+                            <a class="nav-link" id="custom-tabs-brandcode-tab" data-toggle="pill" href="#brand-code-tab"
+                                role="tab" aria-controls="brand-code-tab" aria-selected="false">Brand Code</a>
+                        </li> 
+                        <li class="nav-item" *ngIf="brandcategory" >
+                            <a class="nav-link" id="custom-tabs-brand-cat-tab" data-toggle="pill" href="#brand-cat-tab"
+                                role="tab" aria-controls="brand-cat-tab" aria-selected="false">Assign Brand to Category</a>
+                        </li>                                            
+                    </ul>
+                </div>
+                
+                <div class="tab-content" id="custom-tabs-two-tabContent">
+                    <div class="tab-pane fade show active" id="brand-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-brand-tab">
+                        <app-master-brand></app-master-brand>
+                    </div>
+                    <div class="tab-pane fade" id="brand-code-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-brandcode-tab">
+                        <app-master-brandcode></app-master-brandcode>
+                    </div>
+                        
+                    <div class="tab-pane fade" id="brand-cat-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-brand-cat-tab">
+                        <app-master-brandcategory></app-master-brandcategory>
+                    </div>
+                </div>
+            </div>
+        <!-- </div> -->
+    <!-- </div>  -->
+    <!-- /.container-fluid -->
+</section>
+

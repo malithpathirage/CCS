@@ -1,0 +1,126 @@
+
+<div class="card card-default">
+    <div class="card-header">
+      <h3 class="card-title">List of Pending Approval</h3>
+   
+    </div>
+
+      <div class="card-body">   
+        <div class="row">
+            <div class="col-md-12">
+                <igx-grid #approveGrid [data]="approveList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500" height="600px"
+                    displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'Single'">
+                    <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                        <ng-template igxCell let-cell="cell">
+                            <button igxButton="icon" class="fab-compact" (click)="onApproveRoute($event,cell.cellID)">
+                                <igx-icon family="material">check_box</igx-icon>
+                            </button>
+                        </ng-template>
+                    </igx-column>
+                    <igx-column [field]="'moduleName'" [header]="'Module'" [resizable]="true" [dataType]="'string'" [width]="'150px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <!-- <igx-column [field]="'refNo'" [header]="'RefNo'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                        [width]="'120px'">
+                    </igx-column> -->
+                    <igx-column [width]="'120px'"  [field]="'refNo'" [header]="'RefNo'" [selectable]="false" [sortable]="false" [resizable]="false">
+                        <ng-template igxCell let-cell="cell">                            
+                            <a class="truncate" href="" target="_blank" (click)="previewDocument($event,cell.cellID);">{{cell.value}}</a>                            
+                        </ng-template>
+                    </igx-column>
+
+                    <igx-column [field]="'reqUser'" [header]="'RequestedBy'" [resizable]="true" [dataType]="'string'" [width]="'120px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'remarks'" [header]="'Remarks'" [resizable]="true" [dataType]="'string'" [width]="'200px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'details'" [header]="'Details'" [resizable]="true" [dataType]="'string'" [width]="'250px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'status'" [header]="'Status'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <!-- <igx-column [field]="'statusDate'" [header]="'StatusDate'" [resizable]="true" [dataType]="'date'" [sortable]="true">
+                    </igx-column> -->
+                </igx-grid>
+            </div>
+          
+        </div>
+      </div>
+ 
+   </div>
+
+<igx-dialog #approveModal [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h6 class="col-md-11 bg-secondary">
+            Approval Routing
+        </h6>
+        <div igxButton class="col-md-1" (click)="approveModal.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <form [formGroup]="approveForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Approver *</label>
+                    <igx-combo #approver id="approver" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="approveRoteList" placeholder="Approver"
+                        (onSelectionChange)="singleSelection($event)" formControlName="approver"
+                        searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <igx-input-group type="border">
+                        <textarea igxInput formControlName="remark" type="text" rows=”10”> </textarea>
+                        <label igxLabel for="remark">Remark</label>
+                    </igx-input-group>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-md-6 col-6">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default mr-1" target="_blank"
+                        [disabled]="!(approveForm.valid && okButton)" (click)="approveRouteCostSheet('Waiting')"
+                        data-toggle="tooltip" data-placement="bottom" title="OK">
+                        OK
+                        <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                    </button>
+                    <button type="button" class="btn btn-info mr-1" target="_blank" [disabled]="!appButton"
+                        (click)="approveRouteCostSheet('Approve')" data-toggle="tooltip" data-placement="bottom"
+                        title="Approve">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mr-1" [disabled]="!appButton"
+                        (click)="approveRouteCostSheet('Reject')" data-toggle="tooltip" data-placement="bottom"
+                        title="Reject">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</igx-dialog>
+
+<igx-dialog #mrDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            Material Request Approve
+        </h5>
+        <div igxButton class="col-md-1" (click)="mrDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+    <app-material-request-approve [events]="eventsSubject.asObservable()" (newItemEvent)="refreshApproveCenter($event)"></app-material-request-approve>
+</igx-dialog>

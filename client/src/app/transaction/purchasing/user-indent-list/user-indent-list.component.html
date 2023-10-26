@@ -1,0 +1,121 @@
+<div class="card card-default">
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <h6 class="bg-secondary">
+                    <!-- <i class="fas fa-file-alt"></i>  -->
+                    User Indent List
+                </h6>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="btn-group col-1 offset-10">        
+                <button igxButton="icon" class="fab-compact" (click)="onChangeAssignTo()" title="AssignTo">
+                    <igx-icon family="material">person</igx-icon>
+                </button>
+                <button igxButton="icon" class="fab-compact" (click)="onAddPurchOrder()" title="Create PO">
+                    <igx-icon family="material">note_add</igx-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- INDENT Details -->
+        <div class="row">
+            <igx-grid #indentHdGrid [data]="indentHdList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'indentHeaderId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                height="600px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                [allowAdvancedFiltering]="true" [rowSelection]="'multiple'">
+                <igx-column [field]="'memberCompany'" [header]="'Member Company'" [resizable]="true"
+                    [dataType]="'string'" [width]="'250px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'division'" [header]="'Division Company'" [resizable]="true" [dataType]="'string'"
+                    [width]="'160px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'mrNo'" [header]="'MR No'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column field="category" header="Category" [dataType]="'string'" [resizable]="true"
+                    [sortable]="true" [width]="'120px'" [editable]="false">
+                </igx-column>
+                <igx-column-group header="Indent" [collapsible]="false" [expanded]="false" [resizable]="true">
+                    <ng-template igxCollapsibleIndicator let-column="column">
+                        <igx-icon [attr.draggable]="false" #target="tooltipTarget" [igxTooltipTarget]="tooltipRef"
+                            [showDelay]="0" [hideDelay]="0">{{column.expanded ? 'expand_more' : 'chevron_right'}}
+                        </igx-icon>
+                    </ng-template>
+                    <igx-column field="indentNo" header="Indent No" [width]="'150px'" [resizable]="true"
+                        [dataType]="'string'" [sortable]="true" [visibleWhenCollapsed]="true">
+                        <ng-template igxCell let-cell="cell">
+                            <a class="truncate" href="" target="_blank"
+                                (click)="previewIndent($event,cell.cellID);">{{cell.value}}</a>
+                        </ng-template>
+                    </igx-column>
+                    
+                    <igx-column field="createdDate" header="Date" [dataType]="'date'" [resizable]="true"
+                        [sortable]="true" [visibleWhenCollapsed]="true" [pipeArgs]="formatDateOptions"
+                        [width]="'120px'">
+                    </igx-column>
+                    <igx-column field="statusName" header="Status" [dataType]="'Status'" [resizable]="true"
+                        [sortable]="true" [visibleWhenCollapsed]="true" [width]="'100px'">
+                    </igx-column>
+                </igx-column-group>
+                <igx-column [field]="'assignTo'" [header]="'Assign To'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'createdUser'" [header]="'Created User'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+            </igx-grid>
+        </div>
+    </div>
+</div>
+
+<igx-dialog #indentDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            {{title}}
+        </h5>
+        <div igxButton class="col-md-1" (click)="indentDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+    <app-indent-details [events]="indentSubject.asObservable()"></app-indent-details>
+</igx-dialog>
+
+<igx-dialog #assignedDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            Change Assigned To
+        </h5>
+        <div igxButton class="col-md-1" (click)="assignedDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <form [formGroup]="assignForm">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label> Assigned To *</label>
+                    <igx-combo #assignedTo id="assignedTo" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="assignedToList" placeholder="Assigned To"
+                        (onSelectionChange)="singleSelection($event)" formControlName="assignedTo"
+                        searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-success mr-1" [disabled]="!assignForm.valid" data-toggle="tooltip"
+                        data-placement="bottom" title="Save" (click)="saveAssignTo()" >
+                        <i class="fas fa-save"></i>
+                    </button>                
+                </div>
+            </div>
+        </div>
+    </form>
+    
+</igx-dialog>
+

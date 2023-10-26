@@ -1,0 +1,100 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">User Permission</h3>
+        <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+    <form [formGroup]="userPermitForm" (ngSubmit)="userPermitForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="form-group row">
+                <label class="col-sm-1">User Name </label>
+                <div class="col-sm-2">
+                    <igx-combo id="users" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="permitUsers" placeholder="User Name"
+                        (onSelectionChange)='loadMenusEvent($event)' (onSelectionChange)="singleSelection($event)"
+                        formControlName="Agent" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+                <!-- <div class="col-sm-2">
+                    <button igxButton="outlined" (click)="ClearControls()">New</button>
+                </div> -->
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <h4>Permitted Menu</h4>
+                </div>                
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-danger" (click)="deleteUserMenuList()" 
+                    [disabled]="!(this.PermitMgrid.selectedRows.length>0)" igxRipple>
+                        <i class="fas fa-trash-alt"></i> </button>                    
+                </div>
+                <div class="col-sm-5">
+                    <h4>Not-Permitted Menu</h4>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-success" (click)="saveUserMenuList()" 
+                    [disabled]="!(this.Menugrid.selectedRows.length>0)">
+                        <i class="fas fa-plus-square"></i> </button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <igx-grid #PermitMgrid [data]="permitMenus" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'menuId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="100" height="400px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'multiple'">
+
+                        <igx-column [field]="'groupName'" [header]="'Group Name'" [resizable]="true" [width]="'130px'"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'mType'" [header]="'Type'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'menuName'" [header]="'Menu Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'menuDescription'" [header]="'Description'" [resizable]="true"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+
+                <div class="col-sm-6">
+                    <igx-grid #Menugrid [data]="nPermitMenus" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'menuId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="100" height="400px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'multiple'">
+
+                        <igx-column [field]="'groupName'" [header]="'Group Name'" [resizable]="true" [width]="'130px'"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'mType'" [header]="'Type'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'menuName'" [header]="'Menu Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'menuDescription'" [header]="'Description'" [resizable]="true"
+                            [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- <div class="card-footer">
+      Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+      the plugin.
+    </div> -->
+</div>

@@ -1,0 +1,85 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Assign Category </h3>
+    </div>
+    <form [formGroup]="CategoryAssignForm" (ngSubmit)="CategoryAssignForm.valid" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Sub Category </label>
+                        <igx-combo #subcat id="subCatId" [data]="specialCategoryList" class="combo" displayKey="description" valueKey="autoId"
+                            [itemsMaxHeight]="250"  placeholder="Sub Category"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectSubCategory($event)"
+                            formControlName="subCatId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <div class="btn-group">                      
+                            <button type="button" class="btn btn-default" > 
+                                <i class="fas fa-broom"></i> </button>
+                        </div>
+                    </div>                   
+                </div>
+            </div>
+
+           <div class="form-group row">
+                <div class="col-sm-5">
+                    <h4>Assigned Category</h4>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" igxButton="raised" (click)="deleteCat()" igxButtonBackground="#e14166"
+                         igxRipple [disabled]="(this.assigncatGrid.selectedRows.length==0)" ><i class="fas fa-trash-alt"></i></button>
+                </div>
+                <div class="col-sm-5">
+                    <h4>Un-Assigned Category</h4>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" igxButton="raised" (click)="assignCategory()" igxButtonBackground="#72da66"
+                        igxRipple [disabled]="this.nAssignCatGrid.selectedRows.length==0"><i class="fas fa-plus-square"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-6">
+                    <igx-grid #assigncatGrid [data]="assignCatList" [autoGenerate]="false" [paging]="true"
+                        [rowEditable]="false" [primaryKey]="'autoId'" cellSelection="none"
+                        (onColumnResized)="onResize($event)" [perPage]="10" height="400px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'multiple'"> 
+                        
+                        <igx-column [field]="'code'" [header]="'Sub Category Code'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true">
+                        </igx-column>                      
+                        <igx-column [field]="'description'" [header]="'Sub Category Description'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true">
+                        </igx-column>                        
+                        <igx-column [field]="'isAssign'" [header]="'Is Assign'" [resizable]="true" [dataType]="'boolean'" 
+                            [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+
+                <div class="col-md-6">
+                    <igx-grid #nAssignCatGrid [data]="nAssignCatList" [autoGenerate]="false" [paging]="true" [rowEditable]="false" 
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10" height="400px" 
+                        displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'multiple'"> 
+
+                        <igx-column [field]="'code'" [header]="'Sub Category Code'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true">
+                        </igx-column>                      
+                        <igx-column [field]="'description'" [header]="'Sub Category Description'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true">
+                        </igx-column>                        
+                        <igx-column [field]="'isAssign'" [header]="'Is Assign'" [resizable]="true" [dataType]="'boolean'" 
+                            [sortable]="true">
+                        </igx-column>
+                    </igx-grid>                
+                </div>                                
+            </div>
+        </div>
+    </form>
+</div>

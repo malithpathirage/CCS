@@ -1,0 +1,89 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Costing UOM based Consumption</h3>       
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="articleUOMForm" autocomplete="off">
+            <div class="row">                
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Article </label>
+                        <igx-combo #uarticle id="uarticle" class="combo" displayKey="articleName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="articleList" placeholder="Article" formControlName="uarticle"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectArticle($event)" 
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>              
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Unit </label>
+                        <igx-combo #unit id="unit" class="combo" displayKey="code" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="UnitList" placeholder="Unit"
+                            (onSelectionChange)="singleSelection($event)" formControlName="unit"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="value"/>
+                            <label igxLabel for="value"> Value</label>
+                        </igx-input-group>
+                    </div>
+                </div> 
+
+                <div class="col-md-1">
+                    <div class="btn-group"> 
+                        <button type="button" class="btn btn-success mr-1" [disabled]="!articleUOMForm.valid" (click)="saveArticleUOMConv()">
+                            <i class="fas fa-save"></i> </button> 
+                        <button type="button" class="btn btn-default mr-1" (click)="clearControls()">
+                                <i class="fas fa-broom"></i> </button>               
+                        <button type="button" class="btn btn-default" (click)="loadArticles()">
+                            <i class="fas fa-sync"></i>
+                        </button>                
+                    </div>
+                </div>
+            </div> 
+
+            <div class="row">           
+                <div class="col-md-8">
+                    <igx-grid #articleUOMGrid [data]="artUOMConvList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10" height="500px"
+                        displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                        [allowAdvancedFiltering]="true" [rowSelection]="'single'">
+                        <igx-column [width]="'50px'" [field]="'isActive'" [header]="' '" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">                                
+                                <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="activeArticleUOM($event ,cell.cellID)">
+                                        <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                                    </button>
+                                </ng-template>
+                                <!-- <ng-template #elseBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="deactive($event ,cell.cellID)">
+                                        <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                                    </button>
+                                </ng-template>                   -->
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'version'" [header]="'Version'" [width]="'100px'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'unit'" [header]="'Unit'" [width]="'120px'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'value'" [header]="'Value'"  [pipeArgs]="formatNumber" [width]="'100px'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'isActive'" [header]="'IsActive'" [width]="'100px'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>                
+            </div>
+        </form>
+    </div>
+</div>
+
+

@@ -1,0 +1,165 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h6 class="card-title">Reports </h6>       
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="reportForm" autocomplete="off">
+            <div class="row">
+                <!-- <div class="col-10">
+                    <h6 class="bg-secondary">
+                        Report
+                    </h6>
+                </div> -->
+                <div class="offset-md-11 col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-info mr-1" [disabled]="!reportForm.valid" (click)="printReport()" 
+                            data-toggle="tooltip" data-placement="bottom" title="Save">
+                            <i class="fas fa-print"></i>
+                        </button>
+                        <button type="button" class="btn btn-default mr-1" (click)="clearReport()"
+                            data-toggle="tooltip" data-placement="bottom" title="Clear">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <div class="row">
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Module *</label>
+                        <igx-combo #module id="module" class="combo" displayKey="module" valueKey="module"
+                            [itemsMaxHeight]="250" [data]="moduleList" placeholder="Module" (onSelectionChange)="singleSelection($event)" 
+                            (onSelectionChange)="onSelectModule($event)"
+                            formControlName="module" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label> Report Name *</label>
+                        <igx-combo #reportName id="reportName" class="combo" displayKey="reportName" valueKey="autoId" [itemsMaxHeight]="250" 
+                            [data]="reportList" placeholder="Report Name" (onSelectionChange)="onSelectReport($event)"
+                            (onSelectionChange)="singleSelection($event)" formControlName="reportName"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+               
+                <div class="col-md-2">
+                    <div class="group">
+                        <igx-date-picker id="fromDate" formControlName="fromDate">
+                            <label igxLabel>From Date</label>
+                        </igx-date-picker>
+                    </div>
+                </div>  
+                
+                <div class="col-md-2">
+                    <div class="group">
+                        <igx-date-picker id="toDate" formControlName="toDate">
+                            <label igxLabel>To Date</label>
+                        </igx-date-picker>
+                        <label class="text-danger" *ngIf="reportForm.errors">{{ reportForm.errors?.invalidDate | json }}</label>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label [ngStyle]="{color:'green'}"> Select</label>
+                        <igx-combo #module id="dateRange" class="combo" displayKey="Types" valueKey="Id"
+                            [itemsMaxHeight]="250" [data]="dateSelectionList" placeholder="Module" (onSelectionChange)="singleSelection($event)" 
+                            (onSelectionChange)="onSelectDateRange($event)"
+                            formControlName="dateRange" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+            </div> 
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Customer Name *</label>
+                        <igx-combo #customer id="customer" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="customerList" placeholder="Customer"
+                            (onSelectionChange)="singleSelection($event)" 
+                            (onSelectionChange)="onSelectCustomer($event)"
+                            formControlName="customerId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Delivery Location *</label>
+                        <igx-combo #location id="location" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="customerDtList" placeholder="Location"
+                            (onSelectionChange)="singleSelection($event)" formControlName="customerLocId"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Currency </label>
+                        <igx-combo #currency id="CurrencyId" class="combo" displayKey="code" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="currencyList" placeholder="Currency"
+                             formControlName="CurrencyId" (onSelectionChange)="singleSelection($event)"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="customerRef" />
+                            <label igxLabel for="customerRef"> Customer PO# </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="group">
+                        <igx-date-picker id="asAtDate" formControlName="asAtDate">
+                            <label igxLabel>As At Date</label>
+                        </igx-date-picker>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Buyer </label>
+                        <igx-combo #brand id="brandId" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="brandList" placeholder="Buyer"
+                             formControlName="brandId" (onSelectionChange)="singleSelection($event)"
+                             (onSelectionChange)="onSelectBrand($event)"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Brand Code </label>
+                        <igx-combo #brandcode id="brandcodeId" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="brandCodeList" placeholder="Brand Code"
+                             formControlName="brandcodeId" (onSelectionChange)="singleSelection($event)"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Invoice Type </label>
+                        <igx-combo #invoicetype id="invoicetypeId" class="combo" displayKey="details" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="invoicetypeList" placeholder="Invoice Type"
+                             formControlName="invoicetypeId" (onSelectionChange)="singleSelection($event)"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+            </div>
+        </form>        
+    </div>
+</div>

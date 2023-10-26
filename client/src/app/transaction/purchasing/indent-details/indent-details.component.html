@@ -1,0 +1,73 @@
+<div class="card-body">
+    <div class="row">
+        <div class="col-10">
+            <h6 class="bg-secondary">
+                {{title}}
+            </h6>
+        </div>
+        <div class="col-md-6">
+            <div class="table-responsive table-sm">
+                <table class="table">
+                    <tr>
+                        <th style="width:20%"> Assign To :</th>
+                        <td> {{assignTo}} </td>
+                    </tr>
+                    <tr>
+                        <th> Article :</th>
+                        <td> {{article}} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="table-responsive table-sm">
+                <table class="table">
+                    <tr>
+                        <th style="width:30%"> Member Company :</th>
+                        <td> {{company}} </td>
+                    </tr>
+                    <tr>
+                        <th> Division :</th>
+                        <td> {{division}} </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <button igxButton="icon" class="fab-compact" (click)="onAddPurchOrder()" title="Create PO">
+            <igx-icon family="material">note_add</igx-icon>
+        </button>
+    </div>
+
+    <!-- INDENT Details -->
+    <div class="row">
+        <igx-grid #indentDtGrid [data]="indentDtList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'indentDetailId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+            height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+            <igx-column [field]="'indentLineNo'" [header]="'IndentLine No'" [resizable]="true" [dataType]="'string'" [width]="'140px'"
+                [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [width]="'110px'"
+                [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'unit'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [width]="'90px'"
+                [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'indentQty'" [header]="'Indent Qty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'orderQty'" [header]="'Order Qty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'openQty'" [header]="'Open Qty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+        </igx-grid>
+    </div>
+</div>

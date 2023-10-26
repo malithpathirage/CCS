@@ -1,0 +1,107 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title">Article to Brand Code Mapping</h3>       
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="articleBrandMappingForm" autocomplete="off">
+            <div class="row">                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Brand Code</label>
+                        <igx-combo #mbrand id="mbrand" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="BrandCode" placeholder="Brand" formControlName="mbrand"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectBrand($event)" 
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Article </label>
+                        <igx-combo #uarticle id="uarticle" class="combo" displayKey="articleName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="articleList" placeholder="Article" formControlName="article"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectArticle($event)" 
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>   
+
+                <div class="col-md-2">
+                    <div class="form-group" *ngIf="showColor">
+                        <label>Color *</label>
+                        <igx-combo #cmbcolor class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="colorList" placeholder="Color" (onSelectionChange)="singleSelection($event)"
+                            formControlName="colorId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+
+                    <div class="form-group" *ngIf="!showColor">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="colorId" />
+                            <label igxLabel for="colorId"> Color </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="form-group" *ngIf="showSize">
+                        <label> Size *</label>
+                        <igx-combo #cmbsize class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="sizeList" placeholder="Size" (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectProdGroup($event)"
+                            formControlName="sizeId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+
+                    <div class="form-group" *ngIf="!showSize">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="sizeId" />
+                            <label igxLabel for="sizeId"> Size </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <label>*</label>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success" [disabled]="!isProGroupSel" (click)="saveArticleBrandCode()">
+                            <i class="fas fa-plus-square"></i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row">
+            <div class="col-md-10">
+            <igx-hierarchical-grid #articleBrandCideGrid [data]="articleBrandCodeList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500"
+                height="500px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                [allowAdvancedFiltering]="true" [rowSelection]="'Single'">                 
+                <igx-column [width]="'100px'" field="isActive" [header]="' '" [selectable]="false" [sortable]="false"
+                    [resizable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" (click)="onItemEdit($event,cell.cellID)">
+                            <igx-icon family="material">edit</igx-icon>
+                        </button>
+                        <button igxButton="icon" class="fab-compact"  (click)="openArticleConfirm($event,cell.cellID)">
+                            <igx-icon family="material">delete</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+                 <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'" [sortable]="true" [width]="'300px'">
+                </igx-column>
+                <igx-column [field]="'colorname'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'sizename'" [header]="'Size '" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+            </igx-hierarchical-grid>
+        </div>
+        </div>
+        
+    </div>
+</div>
+
+<igx-dialog #dialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="dialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKSelected($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>

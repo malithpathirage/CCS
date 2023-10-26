@@ -1,0 +1,83 @@
+<div class="card-body">
+    <form [formGroup]="articleForm">
+        <div class="row">                
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Category *</label>
+                    <igx-combo #category id="category" class="combo" displayKey="name" valueKey="autoId"
+                        [itemsMaxHeight]="250" [data]="categoryList" placeholder="Category"
+                        (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                        formControlName="category" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+        
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Product Type *</label>
+                    <igx-combo #prodType id="prodType" class="combo" displayKey="prodTypeName" valueKey="autoId" [itemsMaxHeight]="250"
+                        [data]="prodTypeList" placeholder="Product Type" (onSelectionChange)="singleSelection($event)"
+                        (onSelectionChange)="onSelectProdType($event)" formControlName="prodType" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+        
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Product Group *</label>
+                    <igx-combo #prodGroup id="prodGroup" class="combo" displayKey="prodGroupName" valueKey="autoId"
+                        [itemsMaxHeight]="250" [data]="prodGroupList" placeholder="Product Group"
+                        (onSelectionChange)="singleSelection($event)" formControlName="prodGroup"
+                        (onSelectionChange)="onSelectProdGroup($event)" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>              
+        </div> 
+        <div class="row">
+            <igx-hierarchical-grid #articleGrid [data]="articleList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                height="500px" displayDensity="compact" width="1200px" [allowFiltering]="true"
+                [filterMode]="'excelStyleFilter'" [rowSelection]="'Single'">
+                <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" (click)="selectArticle($event,cell.cellID)">
+                            <igx-icon family="material">check_circle</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+                <igx-column [field]="'stockCode'" [header]="'Stock Code'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'description1'" [header]="'Description1'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'description2'" [header]="'Description2'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'colorCardName'" [header]="'Color Card'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'sizeCardName'" [header]="'Size Card'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'unitCode'" [header]="'Unit'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>               
+                <igx-column [field]="'measurement'" [header]="'Measurement'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'salesPrice'" [header]="'SalesPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'lastCostPrice'" [header]="'LastCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'avgCostPrice'" [header]="'AvgCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'maxCostPrice'" [header]="'MaxCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-row-island [key]="'FlexFields'">
+                    <igx-column [field]="'flexFieldName'" [header]="'FieldName'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true" [width]="'200px'" >
+                    </igx-column>
+                    <igx-column [field]="'flexFieldValue'" [header]="'FieldValue'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true" [width]="'120px'" >
+                    </igx-column>
+                </igx-row-island>
+            </igx-hierarchical-grid>
+        </div>
+      </form>
+</div>

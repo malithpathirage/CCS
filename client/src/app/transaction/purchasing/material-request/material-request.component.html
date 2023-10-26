@@ -1,0 +1,599 @@
+<div class="card card-default">
+    <!-- <div class="card-header">
+        <h3 class="card-title">Sales Order</h3>       
+    </div> -->
+
+    <div class="card-body">
+        <!-- Material Requestion  HEADER -->
+        <form [formGroup]="mrHeaderForm" autocomplete="off">
+            <div class="row">
+                <div class="col-10">
+                    <h6 class="bg-secondary">
+                        <!-- <i class="fas fa-file-alt"></i>  -->
+                       Material Request Header
+                    </h6>
+                </div>
+                <div class="col-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success mr-1" [disabled]="(!mrHeaderForm.valid || status > 1 ? true : false)" data-toggle="tooltip"
+                            data-placement="bottom" title="Save" (click)="this.savedialog.open()" >
+                            <i class="fas fa-save"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary mr-1" [disabled]="status > 0 ? false : true" target="_blank" 
+                            (click)="printMR()" data-toggle="tooltip" data-placement="bottom" title="Print">
+                            <i class="fas fa-print"></i>
+                        </button> 
+                        <button type="button" class="btn btn-info mr-1" [disabled]="status != 1 ? true : false" (click)="approveButtonClicked()" 
+                            data-toggle="tooltip" data-placement="bottom" title="Approve">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger mr-1" [disabled]="(status == 1 || status == 3) ? false : true" (click)="openDeleteDialog($event, 0)" 
+                            data-toggle="tooltip" data-placement="bottom" title="Cancel">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btn btn-default" (click)="refreshMR()" data-toggle="tooltip"
+                            data-placement="bottom" title="Clear">
+                            <i class="fas fa-redo"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-2">
+                    <label> MR No *</label>
+                    <div class="input-group mb-3">                        
+                        <input type="text" placeholder="MR No" formControlName="mrNo" class="form-control rounded-0">
+                        <span class="input-group-append">
+                          <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalMRNoList" data-placement="bottom" title="View"> 
+                              <i class="fas fa-eye"></i> </button>
+                        </span>
+                      </div>
+                </div> 
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Site *</label>
+                        <igx-combo #site id="site" class="combo" displayKey="siteName" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="siteList" placeholder="Site" (onSelectionChange)="onSiteSelect($event)"
+                            (onSelectionChange)="singleSelection($event)" formControlName="site"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Assigned To *</label>
+                        <igx-combo #assignedTo id="assignedTo" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                            [itemsMaxHeight]="250" [data]="assignedToList" placeholder="Assigned To"
+                            (onSelectionChange)="singleSelection($event)" formControlName="assignedTo"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Location *</label>
+                        <igx-combo #location id="location" class="combo" displayKey="location" valueKey="locationId"
+                            [itemsMaxHeight]="250" [data]="locationList" placeholder="Location"
+                            (onSelectionChange)="singleSelection($event)" formControlName="location"
+                            searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Product Category *</label>
+                        <igx-combo #prodCategory id="prodCategory" class="combo" displayKey="name" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="categoryList" placeholder="Product Category"
+                            (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                            formControlName="prodCategory" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+                </div> 
+
+                <div class="col-md-2">
+                    <div class="group">
+                        <igx-date-picker id="trnsDate" formControlName="trnsDate">
+                            <label igxLabel>Trans Date</label>
+                        </igx-date-picker>
+                    </div>
+                </div>  
+            </div>
+
+            <div class="row"> 
+                <!-- <div class="col-md-4">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="remarks" />
+                            <label igxLabel for="remarks"> Remark </label>
+                        </igx-input-group>
+                    </div>
+                </div>     -->
+                
+                <div class="col-md-2">
+                    <h6 class="bg-danger text-white"> {{ statusName }} </h6>
+                </div>
+            </div>            
+        </form>
+
+        <!-- Material Requestion Details -->
+        <form [formGroup]="mrDetailsForm" autocomplete="off">
+            <div class="row">
+                <div class="col-12">
+                    <h6 class="bg-secondary">
+                        <!-- <i class="fas fa-file-alt"></i>  -->
+                        Material Requestion Details
+                    </h6>
+                </div>
+                <!-- /.col -->
+            </div>
+
+            <div class="row">              
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label> Article Name *</label>
+                        <igx-combo #article class="combo" displayKey="articleName" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="allArticleList" placeholder="Article Name" (onSelectionChange)="singleSelection($event)"
+                            formControlName="articleName" searchPlaceholder="Search..." (onSelectionChange)="onArticleSelect($event)">
+                        </igx-combo>                
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">                        
+                        <igx-input-group>
+                            <igx-prefix (click)="checkCategory()">
+                                <igx-icon> search</igx-icon>
+                            </igx-prefix>
+                            <input igxInput type="text" formControlName="articleCode" />
+                            <label igxLabel for="articleCode"> Article Code *</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group" *ngIf="showColor">
+                        <label>Color *</label>
+                        <igx-combo #color class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="colorList" placeholder="Color" (onSelectionChange)="singleSelection($event)"
+                            formControlName="colorId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+
+                    <div class="form-group" *ngIf="!showColor">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="colorId" />
+                            <label igxLabel for="colorId"> Color </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group" *ngIf="showSize">
+                        <label> Size *</label>
+                        <igx-combo #size class="combo" displayKey="name" valueKey="autoId" [itemsMaxHeight]="250"
+                            [data]="sizeList" placeholder="Size" (onSelectionChange)="singleSelection($event)"
+                            formControlName="sizeId" searchPlaceholder="Search...">
+                        </igx-combo>
+                    </div>
+
+                    <div class="form-group" *ngIf="!showSize">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="sizeId" />
+                            <label igxLabel for="sizeId"> Size </label>
+                        </igx-input-group>
+                    </div>
+                </div>  
+                
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="uom" />
+                            <label igxLabel for="uom"> UOM </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="reqQty" />
+                            <label igxLabel for="reqQty"> Req Qty </label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="number" formControlName="unitPrice" />
+                            <label igxLabel for="unitPrice"> Unit Price </label>
+                        </igx-input-group>
+                    </div>
+                </div>               
+            </div>
+            
+            <div class="row">        
+
+                <div class="col-md-2">
+                    <div class="group">
+                        <igx-date-picker id="requireDate" formControlName="requireDate">
+                            <label igxLabel>Require Date</label>
+                        </igx-date-picker>
+                        <label class="text-danger" *ngIf="mrDetailsForm.errors">{{ mrDetailsForm.errors?.invalidDate | json }}</label>
+                    </div>
+                </div>  
+
+                <div class="col-sm-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success mr-1" [disabled]="!mrDetailsForm.valid" 
+                            data-toggle="tooltip" data-placement="bottom" title="Save" (click)="addMRDetailsRow()">
+                            <i class="fas fa-plus"></i>
+                        </button>                        
+                        <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Clear"
+                            (click)="clearMRDetailsControls()">
+                            <i class="fas fa-broom"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <igx-grid #mrDetailsGrid [data]="mrDetailsList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'detailsId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                    height="300px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                    [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+                    <igx-column field="status" [width]="'100px'" [selectable]="false" [sortable]="false" [resizable]="false" 
+                            [editable]="false" >
+                        <ng-template igxCell let-cell="cell">                          
+                            <button igxButton="icon" class="fab-compact" [disabled]="(status > 1 ? true : false)" (click)="onDetailsEdit($event,cell.cellID)">
+                                <igx-icon family="material">edit</igx-icon>
+                            </button>
+                            <button igxButton="icon" class="fab-compact" [disabled]="(status > 1 ? true : false)" (click)="openDeleteDialog($event,cell.cellID)">
+                                <igx-icon family="material">delete</igx-icon>
+                            </button>
+                        </ng-template>
+                    </igx-column>                    
+                    <igx-column [field]="'articleName'" [header]="'Article'" [resizable]="true" [dataType]="'string'" [width]="'300px'"
+                        [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'" [width]="'150px'"
+                        [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'" [width]="'120px'"
+                        [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'uom'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                        [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'reqQty'" [header]="'Req Qty'" [resizable]="true" [dataType]="'number'" [width]="'100px'"
+                            [sortable]="true" [editable]="true">
+                    </igx-column>
+                    <igx-column [field]="'unitPrice'" [header]="'Unit Price'" [resizable]="true" [dataType]="'number'" [pipeArgs]="formatPrice" 
+                            [width]="'120px'" [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'requireDate'" [header]="'Require Date'" [resizable]="true" [dataType]="'string'" [sortable]="true" 
+                            [width]="'150px'" [pipeArgs]="formatDateOptions">
+                    </igx-column>                  
+                    <igx-column [field]="'uomId'" [resizable]="false" [dataType]="'number'" [width]="'0px'" [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'detailsId'" [resizable]="false" [dataType]="'number'" [width]="'0px'" [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'colorId'" [resizable]="false" [dataType]="'number'" [width]="'0px'" [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'articleId'" [resizable]="false" [dataType]="'number'" [width]="'0px'" [sortable]="true" [editable]="false">
+                    </igx-column>
+                    <igx-column [field]="'sizeId'" [resizable]="false" [dataType]="'number'" [width]="'0px'" [sortable]="true" [editable]="false">
+                    </igx-column>
+                </igx-grid>
+            </div>
+        </form>       
+    </div>
+</div>
+
+<igx-dialog #dialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="dialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onDialogOKSelected($event)"
+    message="Are you sure you want to delete the record ?">
+</igx-dialog>
+
+<igx-dialog #savedialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="savedialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onSaveSelected($event)"
+    message="Do you want to save the record ?">
+</igx-dialog>
+
+<igx-dialog #articleDialog [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h5 class="col-md-11 bg-secondary">
+            Article
+        </h5>
+        <div igxButton class="col-md-1" (click)="articleDialog.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <form [formGroup]="articleForm">
+        <div class="row">                
+                    
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Product Type *</label>
+                    <igx-combo #prodType id="prodType" class="combo" displayKey="prodTypeName" valueKey="autoId" [itemsMaxHeight]="250"
+                        [data]="prodTypeList" placeholder="Product Type" (onSelectionChange)="singleSelection($event)"
+                        (onSelectionChange)="onSelectProdType($event)" formControlName="prodType" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+        
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Product Group *</label>
+                    <igx-combo #prodGroup id="prodGroup" class="combo" displayKey="prodGroupName" valueKey="autoId"
+                        [itemsMaxHeight]="250" [data]="prodGroupList" placeholder="Product Group"
+                        (onSelectionChange)="singleSelection($event)" formControlName="prodGroup"
+                        (onSelectionChange)="onSelectProdGroup($event)" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>              
+        </div> 
+        <div class="row">
+            <igx-hierarchical-grid #articleGrid [data]="articleList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                height="500px" displayDensity="compact" width="1200px" [allowFiltering]="true"
+                [filterMode]="'excelStyleFilter'" [rowSelection]="'Single'">
+                <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" (click)="selectArticle($event,cell.cellID)">
+                            <igx-icon family="material">check_circle</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+                <igx-column [field]="'stockCode'" [header]="'Stock Code'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'description1'" [header]="'Description1'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'description2'" [header]="'Description2'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'colorCardName'" [header]="'Color Card'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'sizeCardName'" [header]="'Size Card'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'unitCode'" [header]="'Unit'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>               
+                <igx-column [field]="'measurement'" [header]="'Measurement'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'salesPrice'" [header]="'SalesPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'lastCostPrice'" [header]="'LastCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'avgCostPrice'" [header]="'AvgCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'maxCostPrice'" [header]="'MaxCostPrice'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+                </igx-column>
+                <igx-row-island [key]="'FlexFields'">
+                    <igx-column [field]="'flexFieldName'" [header]="'FieldName'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true" [width]="'200px'" >
+                    </igx-column>
+                    <igx-column [field]="'flexFieldValue'" [header]="'FieldValue'" [resizable]="true" [dataType]="'string'" 
+                            [sortable]="true" [width]="'120px'" >
+                    </igx-column>
+                </igx-row-island>
+            </igx-hierarchical-grid>
+        </div>
+    </form>
+</igx-dialog>
+
+<!-- MR NO LIST  -->
+<div class="modal fade" id="modalMRNoList">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> List of Material Request </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="mrListForm" autocomplete="off">
+                    <div class="row">
+                        <div class="col-md-3">            
+                            <div class="form-group">
+                                <label> Product Category </label>
+                                <igx-combo #prodCat id="prodCat" class="combo" displayKey="name" valueKey="autoId"
+                                    [itemsMaxHeight]="250" [data]="prodCatList" placeholder="Product Category"
+                                    formControlName="prodCat" searchPlaceholder="Search...">
+                                </igx-combo>
+                            </div>            
+                        </div>                        
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label> Site </label>
+                                <igx-combo #searchSite id="searchSite" class="combo" displayKey="siteName" valueKey="autoId"
+                                    [itemsMaxHeight]="250" [data]="searchSiteList" placeholder="Site"
+                                    formControlName="searchSite" searchPlaceholder="Search...">
+                                </igx-combo>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label> Status </label>
+                                <igx-combo #searchStatus id="status" class="combo" displayKey="status" valueKey="autoId"
+                                    [itemsMaxHeight]="250" [data]="statusList" placeholder="Status"
+                                    formControlName="status" searchPlaceholder="Search...">
+                                </igx-combo>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <igx-input-group>
+                                    <input igxInput type="text" formControlName="searchMRNo" />
+                                    <label igxLabel for="searchMRNo">MR No </label>
+                                </igx-input-group>
+                            </div>
+                        </div>                                                                    
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <igx-input-group>
+                                    <input igxInput type="text" formControlName="createdBy" />
+                                    <label igxLabel for="createdBy"> Created By </label>
+                                </igx-input-group>
+                            </div>
+                        </div>   
+
+                        <div class="col-md-2">
+                            <div class="group">
+                                <igx-date-picker id="createdDate" formControlName="createdDate">
+                                    <label igxLabel>Created Date</label>
+                                </igx-date-picker>
+                            </div>
+                        </div>  
+
+                        <div class="col-md-2">
+                            <div class="group">
+                                <igx-date-picker id="reqDate" formControlName="reqDate">
+                                    <label igxLabel>Require Date</label>
+                                </igx-date-picker>
+                            </div>
+                        </div> 
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <igx-input-group>
+                                    <input igxInput type="text" formControlName="searchArticle" />
+                                    <label igxLabel for="searchArticle"> Article Name/Code </label>
+                                </igx-input-group>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-info mr-1" (click)="onSearchMR()" data-toggle="tooltip"
+                                    data-placement="bottom" title="Search">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                                <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Clear"
+                                    (click)="clearMRSearchControls()">
+                                    <i class="fas fa-broom"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <igx-grid #mrNoListGrid [data]="mrList" [autoGenerate]="false" [paging]="true" [rowEditable]="false" 
+                        [primaryKey]="'mrHeaderId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500" height="400px" displayDensity="compact"
+                        [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                        [rowSelection]="'Single'">
+                            <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                                <ng-template igxCell let-cell="cell">
+                                    <button igxButton="icon" class="fab-compact" (click)="onViewMRDetails($event,cell.cellID)"
+                                        data-dismiss="modal">
+                                        <igx-icon family="material">visibility</igx-icon>
+                                    </button>                                                             
+                                </ng-template>
+                            </igx-column>
+                            <igx-column [field]="'mrNo'" [header]="'MR No'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'150px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'status'" [header]="'Status'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'100px'" [editable]="false">
+                            </igx-column>   
+                            <igx-column [field]="'site'" [header]="'Site'" [resizable]="true" [dataType]="'string'" [sortable]="true"
+                                [width]="'150px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'location'" [header]="'Location'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'150px'" [editable]="false">
+                            </igx-column>
+                            <igx-column [field]="'agentName'" [header]="'Assigned To'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'150px'" [editable]="false" >
+                            </igx-column>
+                            <igx-column [field]="'transDate'" [header]="'Trans Date'" [resizable]="true" [dataType]="'date'"
+                                [sortable]="true" [pipeArgs]="formatDateOptions" [width]="'120px'" [editable]="false">
+                            </igx-column>
+                            <!-- <igx-column [field]="'remark'" [header]="'Remarks'" [resizable]="true" [dataType]="'string'"
+                                [sortable]="true" [width]="'250px'" [editable]="false">
+                            </igx-column>       -->
+                        </igx-grid>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer justify-content-between">
+            </div>
+        </div>
+    </div>
+</div>
+
+<igx-dialog #approveModal [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h6 class="col-md-11 bg-secondary">
+            Approval Routing
+        </h6>
+        <div igxButton class="col-md-1" (click)="approveModal.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <form [formGroup]="approveForm">
+        <div class="row">                
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Approver *</label>
+                    <igx-combo #approver id="approver" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="approveRoteList" placeholder="Approver"
+                        (onSelectionChange)="singleSelection($event)"
+                        formControlName="approver" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>  
+        </div> 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <igx-input-group type="border">
+                        <textarea igxInput formControlName="remark" type="text" rows=”10”> </textarea>  
+                        <label igxLabel for="remark">Remark</label>                        
+                    </igx-input-group>
+
+                    <!-- <igx-input-group>
+                        <input igxInput type="text" formControlName="remark" />
+                        <label igxLabel for="remark"> Remark</label>
+                    </igx-input-group> -->
+                </div>
+            </div> 
+        </div>
+
+        <div class="row">
+            <div class="offset-md-6 col-6">
+                <div class="btn-group">    
+                    <button type="button" class="btn btn-default mr-1" target="_blank" [disabled]="!(approveForm.valid && okButton)" (click)="approveRouteMR('Waiting')"
+                        data-toggle="tooltip" data-placement="bottom" title="OK">
+                        OK <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                    </button>                
+                    <button type="button" class="btn btn-info mr-1" target="_blank" [disabled]="!appButton" (click)="approveRouteMR('Approve')"
+                        data-toggle="tooltip" data-placement="bottom" title="Approve">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </button> 
+                    <button type="button" class="btn btn-danger mr-1" [disabled]="!appButton" (click)="approveRouteMR('Reject')"
+                        data-toggle="tooltip" data-placement="bottom" title="Reject">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+                
+    </form>
+</igx-dialog>
+

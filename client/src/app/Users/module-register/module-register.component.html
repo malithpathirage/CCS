@@ -1,0 +1,114 @@
+<form [formGroup]="moduleForm" (ngSubmit)="moduleForm.valid" autocomplete="off">
+    <div class="row">
+        <div class="col-sm-3">
+            <!-- text input -->
+            <div class="form-group">
+                <label>User</label>
+                <igx-combo #combo class="combo" displayKey="cAgentName" valueKey="idAgents" [itemsMaxHeight]="250"
+                    [data]="userList" placeholder="User" (onSelectionChange)="singleSelection($event)"
+                    (onSelectionChange)="LoadUserModuleEvent($event)" formControlName="UserId"
+                    searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label>System Module</label>
+                <igx-combo #combo class="combo" displayKey="moduleName" valueKey="autoId" [itemsMaxHeight]="250"
+                    [data]="moduleList" placeholder="System Module" (onSelectionChange)="singleSelection($event)"
+                    formControlName="SysModuleId" (onSelectionChange)="LoadCompany($event)"
+                    searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <div class="form-group">
+                <label> Company </label>
+                <igx-combo #combo class="combo" displayKey="companyName" valueKey="autoId" [itemsMaxHeight]="250"
+                    [data]="company" placeholder="Company" (onSelectionChange)="singleSelection($event)"
+                    (onSelectionChange)="LoadLocation($event)" formControlName="CompanyId"
+                    searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+        </div>
+
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Location</label>
+                <igx-combo #combo class="combo" displayKey="location" valueKey="autoId" [itemsMaxHeight]="250"
+                    [data]="locations" placeholder="Locations" formControlName="LocationId"
+                    searchPlaceholder="Search...">
+                </igx-combo>
+            </div>
+        </div>
+
+        <div class="col-sm-1">
+            <div class="btn-group">        
+                <button type="button" class="btn btn-success mr-3" [disabled]="!moduleForm.valid" (click)="saveUserModule()">
+                    <i class="fas fa-save"></i> </button>
+                <button type="button" class="btn btn-default" (click)="refresh()">
+                    <i class="fas fa-broom"></i> </button>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="row">
+        <div class="col-sm-1 offset-md-10">
+            <div class="button-sample">
+                <button type="submit" [disabled]="!moduleForm.valid" igxButton="raised" igxButtonBackground="#72da66"
+                    igxRipple (click)="saveUserModule()">Save</button>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <div class="button-sample">
+                <button type="button" igxButton="flat" (click)="refresh()">New</button>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-sm-10">
+            <igx-grid #Modulegrid [data]="UserModList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'rowNo'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+                height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                [allowAdvancedFiltering]="true" [rowSelection]="'single'">
+
+                <igx-column [field]="'moduleName'" [header]="'Module Name'" [resizable]="true" [dataType]="'string'"
+                    [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'companyName'" [header]="'Company'" [resizable]="true" [dataType]="'string'"
+                    [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'description'" [header]="'Location'" [resizable]="true" [dataType]="'string'"
+                    [sortable]="true">
+                </igx-column>
+                <igx-column [field]="'isDefault'" [header]="'Default'" [resizable]="true" [dataType]="'boolean'"
+                    [sortable]="true">
+                </igx-column>
+                <igx-column field="isDefault" header="Set Default" [width]="'120px'">
+                    <ng-template igxCell let-cell="cell">
+                        <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                        <ng-template #thenBlock>
+                            <button igxButton="icon" (click)="setDefault($event ,cell.cellID)">
+                                <igx-icon fontSet="material">check_circle</igx-icon>
+                            </button>
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <button igxButton="icon" [disabled]="'true'">
+                                <igx-icon fontSet="material">check_circle</igx-icon>
+                            </button>
+                        </ng-template>
+                    </ng-template>
+                </igx-column>
+                <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" (click)="onDelete($event,cell.cellID)">
+                            <igx-icon family="material">delete</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+            </igx-grid>
+        </div>
+    </div>
+</form>

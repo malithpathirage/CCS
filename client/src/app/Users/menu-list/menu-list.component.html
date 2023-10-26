@@ -1,0 +1,110 @@
+<div class="card card-default">
+  <div class="card-header">
+    <h3 class="card-title">List of Menu</h3>
+    <!-- <div class="card-tools">
+        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button type="button" class="btn btn-tool" data-card-widget="remove">
+          <i class="fas fa-times"></i>
+        </button>
+      </div> -->
+  </div>
+
+  <form [formGroup]="menuListForm" (ngSubmit)="menuListForm.valid" autocomplete="off">
+    <div class="card-body">
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <igx-input-group>
+              <input igxInput type="text" formControlName="menuName" />
+              <label igxLabel for="menuName"> Menu Name</label>
+            </igx-input-group>
+          </div>
+          <div class="form-group">
+            <igx-input-group>
+              <input igxInput type="text" formControlName="menuDescription" />
+              <label igxLabel for="menuDescription"> Description</label>
+            </igx-input-group>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Type </label>
+            <igx-combo id="menuType" class="combo" displayKey="TDesc" valueKey="TName" [itemsMaxHeight]="250"
+              [data]="menuType" placeholder="Menu Type" (onSelectionChange)="singleSelection($event)"
+              formControlName="mType" searchPlaceholder="Search...">
+            </igx-combo>
+          </div>
+          <div class="form-group">
+            <button type="button" (click)="saveMenuList()" [disabled]="!menuListForm.valid" igxButton="raised"
+              igxButtonBackground="#72da66" igxRipple><i class="fas fa-save"></i> </button>
+            <button type="button" (click)="cancelMenuList()" igxButton="flat"> <i class="fas fa-broom"></i> </button>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>User Level </label>
+            <igx-combo #combo class="combo" displayKey="levelDescription" valueKey="autoId" [itemsMaxHeight]="250"
+              [data]="userLevel" placeholder="User Level" (onSelectionChange)="singleSelection($event)"
+              formControlName="AgentLevelId" searchPlaceholder="Search...">
+            </igx-combo>
+          </div>
+          <div class="form-group">
+
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>Group Name </label>
+            <igx-combo #combo class="combo" displayKey="groupDesc" valueKey="groupName" [itemsMaxHeight]="250"
+              [data]="menuGroup" placeholder="Group Name" (onSelectionChange)="singleSelection($event)"
+              formControlName="groupName" searchPlaceholder="Search...">
+            </igx-combo>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <igx-grid #Menugrid [data]="menuList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+          [primaryKey]="'autoIdx'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500"
+          height="400px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+          [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+          <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+            <ng-template igxCell let-cell="cell">
+              <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                <igx-icon family="material">edit</igx-icon>
+              </button>
+            </ng-template>
+          </igx-column>
+          <igx-column [field]="'autoIdx'" [header]="'ID'" [resizable]="true" [dataType]="'number'" [width]="'100px'" [sortable]="true">
+          </igx-column>
+          <igx-column [field]="'groupName'" [header]="'Group Name'" [resizable]="true" [dataType]="'string'" [width]="'150px'"
+            [sortable]="true">
+          </igx-column>
+          <igx-column [field]="'menuType'" [header]="'Type'" [resizable]="true" [dataType]="'string'" [sortable]="true" [width]="'100px'">
+          </igx-column>
+          <igx-column [field]="'levelDescription'" [header]="'Level'" [resizable]="true" [dataType]="'string'" [width]="'130px'"
+            [sortable]="true">
+          </igx-column>
+          <igx-column [field]="'menuName'" [header]="'Menu Name'" [resizable]="true" [dataType]="'string'" [width]="'200px'"
+            [sortable]="true">
+          </igx-column>
+          <igx-column [field]="'menuDescription'" [header]="'Description'" [resizable]="true" [dataType]="'string'"
+            [sortable]="true">
+          </igx-column>         
+        </igx-grid>
+      </div>
+    </div>
+  </form>
+
+  <!-- <div class="card-footer">
+    Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+    the plugin.
+  </div> -->
+</div>

@@ -1,0 +1,77 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Store Site</h3>        
+    </div>
+
+    <form [formGroup]="mstrStoresite" (ngSubmit)="mstrStoresite.valid"  autocomplete="off">
+        <div class="card-body">        
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text"  formControlName="SiteName"/>
+                            <label igxLabel >Site Name</label>
+                        </igx-input-group>
+                    </div>
+                </div>            
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <igx-input-group>
+                            <input igxInput type="text" formControlName="SiteCode" />
+                            <label igxLabel > Code</label>
+                        </igx-input-group>
+                    </div>
+                </div>
+
+                <div class="col-md-1 offset-md-5">
+                    <div class="form-group">
+                        <button type="button" 
+                            class="btn btn-block btn-success" [disabled]="!mstrStoresite.valid" (click)="SaveStoreSite()">Save</button>
+                    </div>
+                </div>
+
+                <div class="col-md-1">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-block btn-default" (click)="resetControls()">New</button>
+                    </div>
+                </div>               
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <igx-grid #siteGrid [data]="sizeStoreSiteList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+                        height="500px" displayDensity="compact" [allowFiltering]="true"
+                        [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                        <igx-column [width]="'100px'" field="bActive"[selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEdit($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                                <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                                <ng-template #thenBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="active($event , cell.cellID)">
+                                        <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                                    </button>
+                                </ng-template>
+                                <ng-template #elseBlock>
+                                    <button igxButton="icon" class="fab-compact" (click)="deactive($event , cell.cellID)">
+                                        <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                                    </button>
+                                </ng-template>
+                            </ng-template>
+                        </igx-column>
+                        <igx-column [field]="'siteName'" [header]="'Site Name'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                        <igx-column [field]="'siteCode'" [header]="'Code'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

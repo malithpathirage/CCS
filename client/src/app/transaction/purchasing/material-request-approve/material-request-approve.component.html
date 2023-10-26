@@ -1,0 +1,333 @@
+<div class="card-body">
+    <!-- Material Requestion  HEADER -->
+    <form [formGroup]="mrHeaderForm" autocomplete="off">
+        <div class="row">
+            <div class="col-11">
+                <h6 class="bg-secondary">
+                    <!-- <i class="fas fa-file-alt"></i>  -->
+                   MR Header
+                </h6>
+            </div>
+            <div class="col-1">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info mr-1" [disabled]="!mrDetailsForm.valid" data-toggle="tooltip"
+                        data-placement="bottom" title="Stock" (click)="getStockDetails()">
+                        <i class="fa fa-cubes" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-success mr-1" data-toggle="tooltip" data-placement="bottom"
+                        title="Approve" (click)="this.approveModal.open()">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mr-1" data-toggle="tooltip" data-placement="bottom"
+                        title="Reject" (click)="this.approveModal.open()">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+            <!-- /.col -->
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="mrNo" />
+                        <label igxLabel for="mrNo"> MR No </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="site" />
+                        <label igxLabel for="site"> Site </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="assignedTo" />
+                        <label igxLabel for="assignedTo"> Assigned To </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="prodCategory" />
+                        <label igxLabel for="prodCategory"> Product Category </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="location" />
+                        <label igxLabel for="location"> Location </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="group">
+                    <igx-date-picker id="trnsDate" formControlName="trnsDate">
+                        <label igxLabel>Trans Date</label>
+                    </igx-date-picker>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form [formGroup]="mrDetailsForm" autocomplete="off">
+        <div class="row">
+            <div class="col-12">
+                <h6 class="bg-secondary">
+                    <!-- <i class="fas fa-file-alt"></i>  -->
+                    MR Details
+                </h6>
+            </div>
+            <!-- /.col -->
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="articleName" />
+                        <label igxLabel for="articleName"> Article Name</label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="color" />
+                        <label igxLabel for="color"> Color </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="size" />
+                        <label igxLabel for="size"> Size </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="uom" />
+                        <label igxLabel for="uom"> UOM </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="number" formControlName="reqQty" />
+                        <label igxLabel for="reqQty"> Req Qty </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="number" formControlName="approveQty" />
+                        <label igxLabel for="approveQty"> Approve Qty </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="number" formControlName="unitPrice" />
+                        <label igxLabel for="unitPrice"> Unit Price </label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-sm-1">
+                <div class="btn-group">                   
+                    <button type="button" class="btn btn-success mr-1" [disabled]="!mrDetailsForm.valid"
+                        data-toggle="tooltip" data-placement="bottom" title="Save" (click)="addMRDetailsRow()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom"
+                        title="Clear" (click)="clearMRDetailsControls()">
+                        <i class="fas fa-broom"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <igx-grid #mrDetailsGrid [data]="mrDetailsList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                [primaryKey]="'detailsId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+                height="300px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+                [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+                <igx-column field="" [width]="'80px'" [selectable]="false" [sortable]="false" [resizable]="false"
+                    [editable]="false">
+                    <ng-template igxCell let-cell="cell">
+                        <button igxButton="icon" class="fab-compact" (click)="onDetailsEdit($event,cell.cellID)">
+                            <igx-icon family="material">edit</igx-icon>
+                        </button>
+                    </ng-template>
+                </igx-column>
+                <igx-column [field]="'articleCode'" [header]="'Article Code'" [resizable]="true" [dataType]="'string'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'"
+                    [width]="'300px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'"
+                    [width]="'120px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'"
+                    [width]="'100px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'uom'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [width]="'100px'"
+                    [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'reqQty'" [header]="'Req Qty'" [resizable]="true" [dataType]="'number'"
+                    [width]="'100px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'approveQty'" [header]="'Approve Qty'" [resizable]="true" [dataType]="'number'"
+                    [width]="'150px'" [sortable]="true" [editable]="false">
+                </igx-column>                
+                <igx-column [field]="'rate'" [header]="'Rate'" [resizable]="true" [dataType]="'number'"
+                    [width]="'100px'" [sortable]="true" [editable]="false">
+                </igx-column>
+                <igx-column [field]="'requireDate'" [header]="'Require Date'" [resizable]="true" [dataType]="'string'"
+                    [sortable]="true" [width]="'120px'">
+                </igx-column>
+            </igx-grid>
+        </div>
+    </form>
+</div>
+
+<igx-dialog #approveModal [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h6 class="col-md-11 bg-secondary">
+            Approval Routing
+        </h6>
+        <div igxButton class="col-md-1" (click)="approveModal.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <form [formGroup]="approveForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Approver *</label>
+                    <igx-combo #approver id="approver" class="combo" displayKey="cAgentName" valueKey="idAgents"
+                        [itemsMaxHeight]="250" [data]="approveRoteList" placeholder="Approver"
+                        (onSelectionChange)="singleSelection($event)" formControlName="approver"
+                        searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <igx-input-group type="border">
+                        <textarea igxInput formControlName="remark" type="text" rows=”10”> </textarea>
+                        <label igxLabel for="remark">Remark</label>
+                    </igx-input-group>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="offset-md-6 col-6">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default mr-1" target="_blank"
+                        [disabled]="!(approveForm.valid && okButton)" (click)="approveRouteMR('Waiting')"
+                        data-toggle="tooltip" data-placement="bottom" title="OK">
+                        OK
+                        <!-- <i class="fa fa-check-circle" aria-hidden="true"></i> -->
+                    </button>
+                    <button type="button" class="btn btn-info mr-1" target="_blank" [disabled]="!appButton"
+                        (click)="approveRouteMR('Approve')" data-toggle="tooltip" data-placement="bottom"
+                        title="Approve">
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger mr-1" [disabled]="!appButton"
+                        (click)="approveRouteMR('Reject')" data-toggle="tooltip" data-placement="bottom"
+                        title="Reject">
+                        <i class="fa fa-ban" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</igx-dialog>
+
+<igx-dialog #stockModal [closeOnOutsideSelect]="false">
+    <igx-dialog-title>
+        <h6 class="col-md-11 bg-secondary">
+            Stock Details
+        </h6>
+        <div igxButton class="col-md-1" (click)="stockModal.close()">
+            <igx-icon>clear</igx-icon>
+        </div>
+    </igx-dialog-title>
+
+    <div class="row">
+        <igx-grid #stockDetailsGrid [data]="stockList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="100"
+            height="300px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">            
+            <igx-column [field]="'stockCode'" [header]="'Article Code'" [resizable]="true" [dataType]="'string'"
+                [width]="'150px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'articleName'" [header]="'Article Name'" [resizable]="true" [dataType]="'string'"
+                [width]="'300px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'color'" [header]="'Color'" [resizable]="true" [dataType]="'string'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'size'" [header]="'Size'" [resizable]="true" [dataType]="'string'"
+                [width]="'90px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'uom'" [header]="'UOM'" [resizable]="true" [dataType]="'string'" [width]="'90px'"
+                [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'orderQty'" [header]="'Order Qty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'grnQty'" [header]="'GRNQty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>                
+            <igx-column [field]="'stockInQty'" [header]="'StockIn Qty'" [resizable]="true" [dataType]="'number'"
+                [width]="'120px'" [sortable]="true" [editable]="false">
+            </igx-column>
+            <igx-column [field]="'mrRaisedQty'" [header]="'MRRaised Qty'" [resizable]="true" [dataType]="'number'"
+                [sortable]="true" [width]="'120px'">
+            </igx-column>
+            <igx-column [field]="'pendRecivedQty'" [header]="'PendRecived Qty'" [resizable]="true" [dataType]="'number'"
+                [sortable]="true" [width]="'120px'">
+            </igx-column>
+        </igx-grid>
+    </div>
+</igx-dialog>
+
+
+

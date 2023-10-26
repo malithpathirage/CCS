@@ -1,0 +1,88 @@
+<section class="content">
+    <!-- <div class="container-fluid"> -->
+        <!-- <div class="col-12"> -->
+            <div class="card card-default card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                    <ul class="nav nav-tabs" id="custom-tabs-four-tab" role="tablist">
+                        <li class="nav-item" *ngIf="cusHeader">
+                            <a class="nav-link active" id="custom-tabs-header-tab" data-toggle="pill" href="#customer-header-tab" 
+                                role="tab" aria-controls="customer-header-tab" aria-selected="true"> Header</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusLocation">
+                            <a class="nav-link" id="custom-tabs-location-tab" data-toggle="pill" href="#customer-location-tab"
+                                role="tab" aria-controls="customer-location-tab" aria-selected="false">Location</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusUser">
+                            <a class="nav-link" id="custom-tabs-user-tab" data-toggle="pill" href="#customer-user-tab"
+                                role="tab" aria-controls="customer-user-tab" aria-selected="false">User</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusAddList">
+                            <a class="nav-link" id="custom-tabs-address-tab" data-toggle="pill" href="#customer-address-tab"
+                                role="tab" aria-controls="customer-address-tab" aria-selected="false">AddressList</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusBrand">
+                            <a class="nav-link" id="custom-tabs-brand-tab" data-toggle="pill" href="#customer-brand-tab"
+                                role="tab" aria-controls="customer-brand-tab" aria-selected="false">Brand</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusDivision">
+                            <a class="nav-link" id="custom-tabs-division-tab" data-toggle="pill" href="#customer-division-tab" 
+                            role="tab" aria-controls="customer-division-tab"aria-selected="false">Division</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusCurrency">
+                            <a class="nav-link" id="custom-tabs-currency-tab" data-toggle="pill" href="#customer-currency-tab" 
+                            role="tab" aria-controls="customer-currency-tab"aria-selected="false">Currency</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusOtherCode">
+                            <a class="nav-link" id="custom-tabs-other-code-tab" data-toggle="pill" href="#customer-other-code-tab" 
+                            role="tab" aria-controls="customer-other-code-tab"aria-selected="false">Customer Other Codes</a>
+                        </li>
+                        <li class="nav-item" *ngIf="cusOther">
+                            <a class="nav-link" id="custom-tabs-other-tab" data-toggle="pill" href="#customer-other-tab" 
+                            role="tab" aria-controls="customer-other-tab"aria-selected="false">Customer Other Code Values</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="custom-tabs-four-tabContent">
+                    <div class="tab-pane fade show active" id="customer-header-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-header-tab">
+                        <app-customer-header></app-customer-header>
+                    </div>
+                    <div class="tab-pane fade" id="customer-location-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-location-tab">
+                        <app-customer-locations></app-customer-locations>
+                    </div>
+                    <div class="tab-pane fade" id="customer-user-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-user-tab">
+                        <app-customer-user></app-customer-user>
+                    </div>
+                    <div class="tab-pane fade" id="customer-address-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-address-tab">
+                        <app-customer-address></app-customer-address>
+                    </div>
+                    <div class="tab-pane fade" id="customer-brand-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-brand-tab">
+                        <app-customer-brand></app-customer-brand>
+                    </div>
+                    <div class="tab-pane fade" id="customer-division-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-division-tab">
+                        <app-customer-division></app-customer-division>
+                    </div>
+                    <div class="tab-pane fade" id="customer-currency-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-currency-tab">
+                        <app-customer-currency></app-customer-currency>
+                    </div>
+                    <div class="tab-pane fade" id="customer-other-code-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-other-code-tab">
+                        <app-customer-other-code></app-customer-other-code>
+                    </div>
+                    <div class="tab-pane fade" id="customer-other-tab" role="tabpanel"
+                        aria-labelledby="custom-tabs-other-tab">
+                        <app-customer-other></app-customer-other>
+                    </div>
+                </div>
+
+            </div>
+        <!-- </div> -->
+    <!-- </div>  -->
+    <!-- /.container-fluid -->
+</section>

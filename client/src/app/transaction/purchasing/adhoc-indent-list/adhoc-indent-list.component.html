@@ -1,0 +1,49 @@
+<div class="card card-default">
+    <div class="card-body">
+        <form [formGroup]="indentHdForm" autocomplete="off">
+            <div class="row">
+                <div class="col-11">
+                    <h6 class="bg-secondary">
+                        Adhoc Indents
+                    </h6>
+                </div>
+                <div class="col-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success mr-1" [disabled]="!indentHdForm.valid"
+                            data-toggle="tooltip" data-placement="bottom" title="Save" (click)="this.savedialog.open()">
+                            <i class="fas fa-save"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label> Indent Type *</label>
+                        <igx-combo #type id="indentType" class="combo" displayKey="type" valueKey="autoId"
+                            [itemsMaxHeight]="250" [data]="indentTypeList" placeholder="Indent Type" 
+                            (onSelectionChange)="onTypeSelect($event)" (onSelectionChange)="singleSelection($event)"
+                            formControlName="indentType" searchPlaceholder="Search..." >
+                        </igx-combo>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div *ngIf="isSalesOrder">
+    <app-salesorder-list [salesOrder]="successInput" (soChanged)="getSOIndentDetails($event)"></app-salesorder-list>
+</div>
+
+<div *ngIf="isArticle">    
+    <app-article-list [data]="successInput" (articleChanged)="getArticleIndentDetails($event)"></app-article-list>
+</div>
+
+<igx-dialog #savedialog title="Confirmation" leftButtonLabel="Cancel" (onLeftButtonSelect)="savedialog.close()"
+    rightButtonLabel="OK" (onRightButtonSelect)="onSaveSelected($event)"
+    message="Do you want to save the record ?">
+</igx-dialog>
+
+
+

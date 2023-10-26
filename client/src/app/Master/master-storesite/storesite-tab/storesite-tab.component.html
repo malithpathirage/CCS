@@ -1,0 +1,27 @@
+<section class="content">
+    <div class="card card-default card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+            <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                <li class="nav-item" *ngIf="storeSite">
+                    <a class="nav-link active" id="custom-tabs-storesite-tab" data-toggle="pill" href="#storesite-tab" 
+                        role="tab" aria-controls="storesite-tab" aria-selected="true"> Store Site </a>
+                </li>
+                <li class="nav-item" *ngIf="dispatchSite">
+                    <a class="nav-link" id="custom-tabs-dispatchsite-tab" data-toggle="pill" href="#dispatch-site-tab"
+                        role="tab" aria-controls="dispatchsite-tab" aria-selected="false"> Dispatch Site </a>
+                </li>                   
+            </ul>
+        </div>
+        <div class="tab-content" id="custom-tabs-two-tabContent">
+            <div class="tab-pane fade show active" id="storesite-tab" role="tabpanel"
+                aria-labelledby="custom-tabs-storesite-tab">
+                <app-master-storesite></app-master-storesite>
+            </div>
+            
+            <div class="tab-pane fade" id="dispatch-site-tab" role="tabpanel"
+                aria-labelledby="custom-tabs-dispatchsite-tab">
+                <app-dispatch-site></app-dispatch-site>
+            </div>         
+        </div>
+    </div>
+</section>

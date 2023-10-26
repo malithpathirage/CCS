@@ -1,0 +1,175 @@
+<div class="card-header">
+    <h3 class="card-title">Flex Field Details </h3>
+    <!-- <div class="card-tools">       
+       
+    </div> -->
+</div>
+
+<div class="card-body">
+    <form [formGroup]="flexFieldForm" (ngSubmit)="flexFieldForm.valid" autocomplete="off">
+        <div class="row">    
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Category </label>
+                    <igx-combo #category id="categoryId" class="combo" displayKey="name" valueKey="autoId"
+                        [itemsMaxHeight]="250" [data]="categoryList" placeholder="Category"
+                        (onSelectionChange)="singleSelection($event)" (onSelectionChange)="onSelectCategory($event)"
+                        formControlName="categoryId" searchPlaceholder="Search...">
+                    </igx-combo>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button igxButton="icon" class="fab-compact" (click)="clearFlexFieldDetails()" data-toggle="modal"
+                    data-target="#modalHeaderNew" [disabled]="!isCatSelected">
+                    <igx-icon family="material">add_box</igx-icon>
+                </button>
+            </div>    
+        </div>
+    </form>
+    <div class="row">
+        <igx-grid #flexFieldGrid [data]="flexFieldDt" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+            height="500px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+            <igx-column [width]="'100px'" field="isActive" [header]="' '"  [selectable]="false" [sortable]="false" [resizable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" class="fab-compact" (click)="onEditFlexFieldDt($event,cell.cellID)" data-toggle="modal" 
+                        data-target="#modalHeaderNew" [disabled]="!cell.value">
+                        <igx-icon family="material">edit</igx-icon>
+                    </button>
+                    <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                            <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                        </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="deactive($event ,cell.cellID)">
+                            <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                        </button>
+                    </ng-template>
+                </ng-template>
+            </igx-column>
+            <igx-column [field]="'prodTypeName'" [header]="'Product Type'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'module'" [header]="'Module'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>            
+            <igx-column [field]="'flexFieldCode'" [header]="'FlexField Code'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'flexFieldName'" [header]="'FlexField Name'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'dataTypeName'" [header]="'Data Type'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'valueList'" [header]="'Value List'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'mandatory'" [header]="'Mandatory'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'isActive'" [header]="'Is Active'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>
+
+        </igx-grid>
+    </div>
+</div>
+
+<div class="modal fade" id="modalHeaderNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> {{formTitle}} </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="flexFieldForm" (ngSubmit)="flexFieldForm.valid" autocomplete="off">
+                    <div class="card-body">
+
+                        <div class="row">                          
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Product Type </label>
+                                    <igx-combo #prodType id="prodTypeId" class="combo" displayKey="prodTypeName" valueKey="autoId"
+                                        [itemsMaxHeight]="250" [data]="prodTypeList" placeholder="Product Type"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="prodTypeId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label> Module </label>
+                                    <igx-combo #module id="moduleId" class="combo" displayKey="module" valueKey="moduleId"
+                                        [itemsMaxHeight]="250" [data]="moduleList" placeholder="Module"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="moduleId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div> 
+                            
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <igx-checkbox #chkIsValueList checked="false" formControlName="valueList">
+                                        ValueList
+                                    </igx-checkbox>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <igx-checkbox #chkMandatory checked="false" formControlName="mandatory">
+                                        Mandatory
+                                    </igx-checkbox>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="flexFieldName" />
+                                        <label igxLabel for="flexFieldName"> Field Name</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="flexFieldCode" />
+                                        <label igxLabel for="flexFieldCode"> Field Code </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>                           
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label> Data Type </label>
+                                    <igx-combo #dataType id="dataType" class="combo" displayKey="type" valueKey="typeId"
+                                        [itemsMaxHeight]="250" [data]="dataTypeList" placeholder="Data Type"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="dataType"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default mr-3" (click)="clearFlexFieldDetails()" [disabled]="isEditMode" > 
+                        <i class="fas fa-broom"></i> </button>
+                    <button type="button" class="btn btn-success" [disabled]="!flexFieldForm.valid" (click)="saveFlexFieldDetails()">
+                        <i class="fas fa-save"></i> </button>
+                </div>                
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

@@ -1,0 +1,252 @@
+<div class="card-header">
+        <h3 class="card-title">Supplier Header</h3>
+        <div class="card-tools">       
+            <button igxButton="icon" class="fab-compact" (click)="clearSuplierHd()" data-toggle="modal" data-target="#modalHeaderNew">
+                <igx-icon family="material">add_box</igx-icon>
+            </button>
+        </div>
+</div>
+<div class="card-body">
+    <div class="row">
+        <igx-grid #supplierHdGrid [data]="supplierList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+            [primaryKey]="'supplierId'" cellSelection="none" [perPage]="100"
+            height="500px" displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'"
+            [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+            <igx-column [width]="'100px'" field="bActive" [header]="' '"  [selectable]="false" [sortable]="false" [resizable]="false">
+                <ng-template igxCell let-cell="cell">
+                    <button igxButton="icon" class="fab-compact" (click)="onEditSupplierHd($event,cell.cellID)" data-toggle="modal" 
+                        data-target="#modalHeaderNew" [disabled]="!cell.value">
+                        <igx-icon family="material">edit</igx-icon>
+                    </button>
+                    <div *ngIf="!cell.value; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="active($event ,cell.cellID)">
+                            <igx-icon class="icon-red" family="material">toggle_off</igx-icon>
+                        </button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button igxButton="icon" class="fab-compact" (click)="deactive($event ,cell.cellID)">
+                            <igx-icon class="icon-green" family="material">toggle_on</igx-icon>
+                        </button>
+                    </ng-template>
+                </ng-template>
+            </igx-column>
+            <igx-column [field]="'shortCode'" [header]="'Short Code'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'name'" [header]="'Name'" [resizable]="true" [dataType]="'string'" [sortable]="true" [width]="'200px'">
+            </igx-column>
+            <igx-column [field]="'address'" [header]="'Address'" [resizable]="true" [dataType]="'string'" [sortable]="true" [width]="'300px'">
+            </igx-column>
+            <igx-column [field]="'email'" [header]="'Email'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'city'" [header]="'City'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'tel'" [header]="'Tel'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+           <!-- <igx-column [field]="'currencyCode'" [header]="'Currency'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'countryCode'" [header]="'Country'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>-->
+            <igx-column [field]="'vatNo'" [header]="'VAT#'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'taxNo'" [header]="'SVAT No'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'tinNo'" [header]="'TinNo'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'zipPostalCode'" [header]="'ZipPostalCode'" [resizable]="true" [dataType]="'string'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'creditDays'" [header]="'CreditDays'" [resizable]="true" [dataType]="'number'" [sortable]="true">
+            </igx-column>
+            <igx-column [field]="'bActive'" [header]="'bActive'" [resizable]="true" [dataType]="'boolean'" [sortable]="true">
+            </igx-column>
+        </igx-grid>
+    </div>
+</div> 
+
+<div class="modal fade" id="modalHeaderNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> {{formTitle}} </h5>
+                <button #closeModal type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="supplierHeaderForm" (ngSubmit)="supplierHeaderForm.valid" autocomplete="off">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-8">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="name" />
+                                        <label igxLabel for="name"> Name</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="shortCode" />
+                                        <label igxLabel for="shortCode"> ShortCode </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="address" />
+                                        <label igxLabel for="address"> Address</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="city" />
+                                        <label igxLabel for="city"> City </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="email" formControlName="email" />
+                                        <label igxLabel for="email"> Email</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="state" />
+                                        <label igxLabel for="state"> State</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="zipPostalCode" />
+                                        <label igxLabel for="zipPostalCode"> Zip Postal Code </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Country </label>
+                                    <igx-combo #country id="country" class="combo" displayKey="code" valueKey="autoId"
+                                        [itemsMaxHeight]="250" [data]="countryList" placeholder="Country"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="countryId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Currency </label>
+                                    <igx-combo #currency id="currency" class="combo" displayKey="code" valueKey="autoId"
+                                        [itemsMaxHeight]="250" [data]="currencyList" placeholder="Currency"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="currencyId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Supplier Type </label>
+                                    <igx-combo #supplierType id="supplierType" class="combo" displayKey="description" valueKey="suppTypeId"
+                                        [itemsMaxHeight]="250" [data]="supplierTList" placeholder="SupplierType"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="supTypeId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="vatNo" />
+                                        <label igxLabel for="vatNo"> VAT No</label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="taxNo" />
+                                        <label igxLabel for="taxNo"> Tax No </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="text" formControlName="tinNo" />
+                                        <label igxLabel for="tinNo"> TIN No </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <igx-combo #company id="company" class="combo" displayKey="companyName" valueKey="autoId"
+                                        [itemsMaxHeight]="250" [data]="masterCompanyList" placeholder="Comapny"
+                                        (onSelectionChange)="singleSelection($event)" formControlName="companyId"
+                                        searchPlaceholder="Search...">
+                                    </igx-combo>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="tel" formControlName="tel" />
+                                        <label igxLabel for="tel"> Phone </label>
+                                        <igx-hint position="start">Ex.: 011 1234567</igx-hint>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="number" formControlName="creditDays" />
+                                        <label igxLabel for="creditDays"> Credit Days </label>
+                                    </igx-input-group>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <igx-input-group>
+                                        <input igxInput type="number" formControlName="shipmentTolerence" />
+                                        <label igxLabel for="shipmentTolerence"> Shipment Tolerence </label>
+                                    </igx-input-group>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-default mr-3" (click)="clearSuplierHd()" [disabled]="isEditMode" > 
+                        <i class="fas fa-broom"></i> </button>
+                    <button type="button" class="btn btn-success"  (click)="saveSupplier()">
+                        <i class="fas fa-save"></i> </button>
+                </div>                
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>

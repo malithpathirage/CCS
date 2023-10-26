@@ -1,0 +1,50 @@
+
+<div class="card card-default">
+    <div class="card-header">
+      <h3 class="card-title">Error Log</h3>
+      <!-- <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="remove">
+            <i class="fas fa-times"></i>
+          </button>
+        </div> -->
+    </div>
+
+      <div class="card-body">   
+        <div class="row">
+            <div class="col-md-12">
+                <igx-grid #errorLogGrid [data]="errorList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                    [primaryKey]="'errorLogID'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="500" height="600px"
+                    displayDensity="compact" [allowFiltering]="true" [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true"
+                    [rowSelection]="'Single'">
+                    
+                    <igx-column [field]="'module'" [header]="'Module'" [resizable]="true" [dataType]="'string'" [width]="'150px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'errorNumber'" [header]="'Error Number'" [resizable]="true" [dataType]="'number'" [sortable]="true"
+                        [width]="'120px'">
+                    </igx-column>
+                    <igx-column [field]="'errorProcedure'" [header]="'Procedure'" [resizable]="true" [dataType]="'string'" [width]="'200px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'errorMessage'" [header]="'ErrorMessage'" [resizable]="true" [dataType]="'string'" [width]="'500px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'errorLine'" [header]="'Error Line'" [resizable]="true" [dataType]="'string'" [width]="'120px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <igx-column [field]="'errorTime'" [header]="'Error Time'" [resizable]="true" [dataType]="'string'" [width]="'150px'"
+                        [sortable]="true">
+                    </igx-column>
+                    <!-- <igx-column [field]="'statusDate'" [header]="'StatusDate'" [resizable]="true" [dataType]="'date'" [sortable]="true">
+                    </igx-column> -->
+                </igx-grid>
+            </div>
+          
+        </div>
+      </div>
+ 
+   </div>
+

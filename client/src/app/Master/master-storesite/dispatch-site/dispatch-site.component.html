@@ -1,0 +1,53 @@
+<div class="card card-default">
+    <div class="card-header">
+        <h3 class="card-title"> Dispatch Site </h3> 
+    </div> 
+    <form [formGroup]="dispatchSiteForm" autocomplete="off">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <!-- <label>StoreSite Name</label> -->
+                    <igx-combo #storesite id="dispatchId" class="combo" displayKey="siteName" valueKey="autoId"
+                    [itemsMaxHeight]="250" [data]="StoreSiteList" placeholder="StoreSite"
+                    (onSelectionChange)="singleSelection($event)"  (onSelectionChange)='onSelectDispatch($event)'
+                    formControlName="dispatchId" searchPlaceholder="Search...">
+                    </igx-combo>
+                    </div>                  
+                </div>
+                <div class="col-md-1">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default mr-3" (click)="resetControlls()">
+                            <i class="fas fa-broom"></i> </button>
+                        <button type="button" class="btn btn-success" [disabled]="!isDispatchSiteSel" (click)="saveDispatchSite()" >
+                            <i class="fas fa-save"></i> </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <igx-grid #dispatchSiteGrid [data]="dispatchSiteList" [autoGenerate]="false" [paging]="true" [rowEditable]="false"
+                        [primaryKey]="'autoId'" cellSelection="none" (onColumnResized)="onResize($event)" [perPage]="10"
+                        height="500px" displayDensity="compact" [allowFiltering]="true"
+                        [filterMode]="'excelStyleFilter'" [allowAdvancedFiltering]="true" [rowSelection]="'Single'">
+
+                        <igx-column [width]="'50px'" [selectable]="false" [sortable]="false" [resizable]="false">
+                            <ng-template igxCell let-cell="cell">
+                                <button igxButton="icon" class="fab-compact" (click)="onEditdispatchSite ($event,cell.cellID)">
+                                    <igx-icon family="material">edit</igx-icon>
+                                </button>
+                            </ng-template>
+                        </igx-column>                        
+                        <!--<igx-column [field]="'autoId'" [header]="'DispatchId'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column> -->
+                        <igx-column [field]="'siteName'" [header]="'SiteName'" [resizable]="true" [dataType]="'string'"
+                            [sortable]="true">
+                        </igx-column>
+                    </igx-grid>
+                </div>
+            </div>  
+        </div>
+    </form> 
+</div>

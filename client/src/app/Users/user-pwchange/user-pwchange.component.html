@@ -1,0 +1,74 @@
+<form [formGroup]="pwChangeForm" (ngSubmit)="pwChangeForm.valid && changeUserPassword()" autocomplete="off">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="cAgentName" (keyup)="clearPassword($event)" />
+                        <label igxLabel for="cAgentName"> User Name</label>
+                    </igx-input-group>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <button igxButton="icon" (click)="searchUserPassword()">
+                    <igx-icon>search</igx-icon>
+                </button>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="text" formControlName="OldPassword" />
+                        <label igxLabel for="OldPassword"> Old Password</label>
+                    </igx-input-group>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="password" formControlName="cPassword" />
+                        <label igxLabel for="cPassword"> New Password</label>
+                    </igx-input-group>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <igx-input-group>
+                        <input igxInput type="password" formControlName="confirmPassword" />
+                        <label igxLabel for="confirmPassword"> Confirm Password</label>
+                    </igx-input-group>
+                </div>
+            </div>
+
+            <div class="col-sm-2">
+                <div class="btn-group">        
+                    <button type="submit" class="btn btn-success mr-3" [disabled]="!pwChangeForm.valid">
+                        <i class="fas fa-save"></i> </button>
+                    <button type="button" class="btn btn-default" (click)="resetForm()">
+                        <i class="fas fa-broom"></i> </button>
+                </div>
+            </div>
+        </div>  
+
+        <div class="row" *ngIf="validationErrors.length > 0">
+            <ul class="text-danger text-left">
+                <li *ngFor="let error of validationErrors">
+                    {{error}}
+                </li>
+            </ul>
+        </div>
+
+        <!-- <div class="row">           
+            <div class="col-sm-1 offset-md-10">
+                <div class="button-sample">
+                    <button type="submit" [disabled]="!pwChangeForm.valid" igxButton="raised"
+                        igxButtonBackground="#72da66" igxRipple>Save</button>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <div class="button-sample">
+                    <button type="button" (click)="resetForm()" igxButton="flat">New</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</form>
