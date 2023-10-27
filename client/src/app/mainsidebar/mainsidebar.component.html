@@ -102,6 +102,7 @@
             </li>
           </ul>
         </li>
+
         <li class="nav-item" *ngIf="masterGroup">
           <ul class="nav nav-treeview" *ngIf="article">
             <li class="nav-item">
@@ -113,6 +114,24 @@
           </ul>
         </li>
 
+        <li class="nav-item" *ngIf="masterGroup">
+          <!--menu-open-->
+          <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-money-bill-wave"></i>
+            <p>
+              Item Creation
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview" *ngIf="article">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/Article" routerLinkActive="active" (click)="menuClose()">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Article</p>
+              </a>
+            </li>
+          </ul>
+        </li>
         <li class="nav-item" *ngIf="purchasingGroup">
           <!--menu-open-->
           <a href="#" class="nav-link">
