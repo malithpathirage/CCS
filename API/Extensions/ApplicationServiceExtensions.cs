@@ -21,16 +21,14 @@ namespace API.Extensions
             services.AddScoped<IApplicationAdminDbContext>(provider => provider.GetService<ApplicationAdminDbContext>());
             services.AddScoped<IApplicationCartonDbContext>(provider => provider.GetService<ApplicationCartonDbContext>());
            
-
-            // Inject the factory
             services.AddTransient<IDbConnectionFactory, DapperDbConenctionFactory>();
             services.AddScoped<IUserRepository, UserRepository>(); 
             services.AddScoped<IMasterRepository, MasterRepository>(); 
             services.AddScoped<ITestRepository, TestRepository>(); 
             services.AddScoped<IAdminRepository,AdminRepository>();
             services.AddScoped<IReportRepository,ReportRepository>();
-             services.AddScoped<IPurchasingRepository, PurchasingRepository>();
-             services.AddScoped<IIndentRepository, IndentRepository>();
+            services.AddScoped<IPurchasingRepository, PurchasingRepository>();
+            services.AddScoped<IIndentRepository, IndentRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
 
             ////---------=========== QUERY WITH EF ===============-----------  

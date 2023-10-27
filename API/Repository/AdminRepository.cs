@@ -25,7 +25,6 @@ namespace API.Repository
 
             para.Add("SysModuleId", loc.SysModuleId);
             para.Add("CompanyId", loc.CompanyId);
-            //var values = new { SysModuleId = loc.SysModuleId };
 
             locationList = await DbConnection.QueryAsync<MstrLocation>("spSysModuleGetLocation"
             , para, commandType: CommandType.StoredProcedure);

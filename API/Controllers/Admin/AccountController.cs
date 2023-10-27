@@ -142,23 +142,6 @@ namespace API.Controllers.Admin
 
                 menuList = await _adminRepository.GetAuthMenuListAsync(userDto);
 
-                // if (moduleId == 1) //Log to CCS System
-                // {  
-                //     menuList = await _masterRepository.GetAuthMenuListAsync(userDto); 
-                // }
-                // else if (moduleId == 2) // Log to PTrack System
-                // {   
-                //     menuList = await _pTrackMasterRepository.GetAuthMenuListAsyncPtrack(userDto);
-                // }
-                // else if (moduleId == 4) // Log to PTrack System
-                //{   
-                //    menuList = await _mTrackMasterRepository.GetAuthMenuListAsyncMtrack (userDto);
-                //}
-                // else if (moduleId == 3) 
-                //  {
-                //     menuList = await _mwsMasterRepository.GetAuthMenuListAsyncMWS(userDto);
-                // }
-
             }
 
             return new UserDto

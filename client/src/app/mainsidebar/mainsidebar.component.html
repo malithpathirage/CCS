@@ -93,14 +93,6 @@
               </a>
             </li>
           </ul>
-          <ul class="nav nav-treeview" *ngIf="reportList">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/ReportList" routerLinkActive="active" (click)="menuClose()">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Report List</p>
-              </a>
-            </li>
-          </ul>
           <ul class="nav nav-treeview" *ngIf="userPermit">
             <li class="nav-item">
               <a class="nav-link" routerLink="/UserPermission" routerLinkActive="active" (click)="menuClose()">
@@ -109,207 +101,13 @@
               </a>
             </li>
           </ul>
-          <ul class="nav nav-treeview" *ngIf="codeDefi">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/CodeDefinition" routerLinkActive="active" (click)="menuClose()">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Code Definition</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="serialNoDt">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/SerialNoDetails" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>SerialNo Details</p>
-              </a>
-            </li>
-          </ul>
         </li>
         <li class="nav-item" *ngIf="masterGroup">
-          <!--menu-open-->
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cog"></i>
-            <p>
-              Master Settings
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview" *ngIf="mstrSize">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/SizeTab" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Size</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="mstrColor">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/ColorTab" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Color</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="units">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Unit" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Units</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="storeSite">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/StoresiteTab" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Store Site</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="currency">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Currency" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Currency</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="countries">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Countries" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Countries</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="materialType">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/MasterMaterialtype" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Material type</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="addressType">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/AddressType" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Address Type</p>
-              </a>
-            </li>
-          </ul>
-
           <ul class="nav nav-treeview" *ngIf="article">
             <li class="nav-item">
               <a class="nav-link" routerLink="/Article" routerLinkActive="active" (click)="menuClose()">
                 <i class="far fa-circle nav-icon"></i>
                 <p>Article</p>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="nav nav-treeview" *ngIf="masterCompany">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/MasterCompany" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Company</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="paymentMode">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/PaymentMode" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Payment Mode</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="ports">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Ports" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Ports</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="accountType">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/AccountType" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Account Type</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="shipmentMode">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/ShipmentMode" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Shipment Mode</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="SupplierType">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/SupplierType" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Supplier Type</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="supplier">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Supplier" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Supplier</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="sectionmaster">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/sections" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Section</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="forwarder">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Forwarder" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Forwarder</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="POType">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/POType" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>PO Type</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="Basis">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/Basis" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Basis</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="AdditionalC">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/AdditionalC" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Additional Charges</p>
-              </a>
-            </li>
-          </ul>
-          <ul class="nav nav-treeview" *ngIf="DeliveryT">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/DeliveryT" routerLinkActive="active">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Delivery Terms</p>
               </a>
             </li>
           </ul>
@@ -367,15 +165,6 @@
               <a class="nav-link" routerLink="/UserIndent" routerLinkActive="active" (click)="menuClose()">
                 <i class="far fa-circle nav-icon"></i>
                 <p> User Indent List</p>
-              </a>
-            </li>
-          </ul>
-
-          <ul class="nav nav-treeview" *ngIf="adhocIndent">
-            <li class="nav-item">
-              <a class="nav-link" routerLink="/AdhocIndent" routerLinkActive="active" (click)="menuClose()">
-                <i class="far fa-circle nav-icon"></i>
-                <p> Adhoc Indent List</p>
               </a>
             </li>
           </ul>

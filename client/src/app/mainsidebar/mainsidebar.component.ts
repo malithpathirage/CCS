@@ -131,56 +131,6 @@ export class MainsidebarComponent implements OnInit {
   paymentinvoice: boolean = false;
   fixedAssetGroup: boolean = false;
 
-  vehicletype: boolean = false;
-  vehiclecategory: boolean = false;
-  bookingtype: boolean = false;
-  transporttype: boolean = false;
-  paymenttype: boolean = false;
-  route: boolean = false;
-  routefactoryallocation: boolean = false;
-  vehicleother: boolean = false;
-  transpoter: boolean = false;
-  transpoterfactoryallocation: boolean = false;
-  ratematrix: boolean = false;
-  approvalmatrix: boolean = false;
-  bookingrequest: boolean = false;
-  vehicleregister: boolean = false;
-  payableInvoice: boolean = false;
-  integration: boolean = false;
-  packagemapping: boolean = false;
-  stockAdj: boolean = false;
-  faMasterTab: boolean = false;
-  model: boolean = false;
-  sales: boolean = false;
-  buyerPurchaseOrder: boolean = false;
-  fixedAssetDetails: boolean = true;
-  dashboard2: boolean = false;
-  blockbooking: boolean = false;
-  operationAssign: boolean = false;
-  ordercreation: boolean = false;
-  lostTime: boolean = false;
-  departmentwisesectionmaster: boolean = false;
-  merchantdizer: boolean = false;
-  buyingofficemaster: boolean = false;
-  dyetype: boolean = false;
-  fabcomp: boolean = false;
-  recipe: boolean = false;
-  gender: boolean = false;
-  gmttype: boolean = false;
-  machinemaster: boolean = false;
-  machinetoprocess: boolean = false;
-  machtypes: boolean = false;
-  processtype: boolean = false;
-  receipetype: boolean = false;
-  recipeutl: boolean = false;
-  sampleissue: boolean = false;
-  sampletype: boolean = false;
-  speoprtype: boolean = false;
-  subsalescategory: boolean = false;
-  useby: boolean = false;
-  washstd: boolean = false;
-  costsheet: boolean = false;
-  machineBreak: boolean = false;
   @ViewChild('navMenu', { static: false }) navMenu: ElementRef<HTMLElement>;
 
   constructor(
@@ -295,15 +245,8 @@ export class MainsidebarComponent implements OnInit {
 
     if (formMenus.filter((x) => x.groupName == 'Dashboard').length > 0) {
       this.dashboard = true;
-
-      if (formMenus.filter((x) => x.autoIdx == 1184).length > 0)
+    if (formMenus.filter((x) => x.autoIdx == 1184).length > 0)
         this.approveCenter = true;
-      if (formMenus.filter((x) => x.autoIdx == 2196).length > 0)
-        this.errorLog = true;
-      if (formMenus.filter((x) => x.autoIdx == 2228 || x.autoIdx == 2313).length > 0)
-        this.dashboard1 = true;
-      if (formMenus.filter((x) => x.autoIdx == 2228 || x.autoIdx == 2361).length > 0)
-        this.dashboard2 = true;
 
     }/// USER PERMITET ADMIN GROUP
     if (formMenus.filter((x) => x.groupName == 'Admin').length > 0) {
@@ -312,91 +255,34 @@ export class MainsidebarComponent implements OnInit {
       //// SUB MENU OF ADMIN GROUP
       if (formMenus.filter((x) => x.autoIdx == 35).length > 0)
         this.userPermit = true;
-      if (formMenus.filter((x) => x.autoIdx == 2183).length > 0)
-        this.reportList = true;
       if (formMenus.filter((x) => x.autoIdx == 29).length > 0)
         this.userReg = true;
-      if (formMenus.filter((x) => x.autoIdx == 31).length > 0)
+      if (formMenus.filter((x) => x.autoIdx == 35).length > 0)
         this.menuList = true;
-      if (formMenus.filter((x) => x.autoIdx == 44).length > 0)
-        this.codeDefi = true;
-      if (formMenus.filter((x) => x.autoIdx == 45).length > 0)
-        this.serialNoDt = true;
+    
     }
     if (formMenus.filter((x) => x.groupName == 'Master').length > 0) {
       this.masterGroup = true;
-
-      //// SUB MENU OF MASTER GROUP
-      if (formMenus.filter(x => x.autoIdx == 3 || x.autoIdx == 43 || x.autoIdx == 65).length > 0)
-        this.mstrSize = true;
-      if (formMenus.filter((x) => x.autoIdx == 2 || x.autoIdx == 42 || x.autoIdx == 66).length > 0)
-        this.mstrColor = true;
-      if (formMenus.filter((x) => x.autoIdx == 36 || x.autoIdx == 47).length > 0)
-        this.units = true;
-      if (formMenus.filter((x) => x.autoIdx == 37 || x.autoIdx == 175).length > 0)
-        this.storeSite = true;
-      if (formMenus.filter((x) => x.autoIdx == 53).length > 0)
-        this.currency = true;
-      if (formMenus.filter((x) => x.autoIdx == 54).length > 0)
-        this.countries = true;
-      if (formMenus.filter((x) => x.autoIdx == 55).length > 0)
-        this.paymentTerms = true;
-      if (formMenus.filter((x) => x.autoIdx == 56).length > 0)
-        this.rejReason = true;
-      if (formMenus.filter((x) => x.autoIdx == 59).length > 0)
-        this.materialType = true;
-      if (formMenus.filter((x) => x.autoIdx == 60).length > 0)
-        this.category = true;
-      if (formMenus.filter((x) => x.autoIdx == 61).length > 0)
-        this.addressType = true;
-      if (formMenus.filter((x) => x.autoIdx == 2214).length > 0)
-        this.ports = true;
-      if (formMenus.filter((x) => x.autoIdx == 2237).length > 0)
-        this.supplier = true;
-      if (formMenus.filter((x) => x.autoIdx == 2243).length > 0)
-        this.SupplierType = true;
-      if (formMenus.filter((x) => x.autoIdx == 2245).length > 0)
-        this.accountType = true;
-      if (formMenus.filter((x) => x.autoIdx == 2249).length > 0)
-        this.shipmentMode = true;
-      if (formMenus.filter((x) => x.autoIdx == 2249).length > 0)
-        this.forwarder = true;
-      if (formMenus.filter((x) => x.autoIdx == 2252).length > 0)
-        this.POType = true;
-      if (formMenus.filter((x) => x.autoIdx == 2256).length > 0)
-        this.Basis = true;
-      if (formMenus.filter((x) => x.autoIdx == 2258).length > 0)
-        this.AdditionalC = true;
-      if (formMenus.filter((x) => x.autoIdx == 2260).length > 0)
-        this.DeliveryT = true;
+      if (formMenus.filter((x) => x.autoIdx == 3 || x.autoIdx == 3 || x.autoIdx == 3).length > 0)
+      this.article = true;
     }
     if (formMenus.filter((x) => x.groupName == 'Purchasing').length > 0) {
       this.purchasingGroup = true;
 
       //// SUB MENU OF Order GROUP
-      if (formMenus.filter((x) => x.autoIdx == 2211).length > 0)
+      if (formMenus.filter((x) => x.autoIdx == 3).length > 0)
         this.mrNote = true;
-      if (formMenus.filter((x) => x.autoIdx == 2218).length > 0)
+      if (formMenus.filter((x) => x.autoIdx == 3).length > 0)
         this.purchasingOrder = true;
-    }
-    if (formMenus.filter((x) => x.groupName == 'Inventory').length > 0) {
-      this.inventoryGroup = true;
-
-      if (formMenus.filter((x) => x.autoIdx == 2232).length > 0)
-        this.grn = true;
-      if (formMenus.filter((x) => x.autoIdx == 2276).length > 0)
-        this.stockAdj = true;
     }
     if (formMenus.filter((x) => x.groupName == 'Indent').length > 0) {
       this.indentGroup = true;
 
       //// SUB MENU OF Indent GROUP
-      if (formMenus.filter((x) => x.autoIdx == 2220).length > 0)
+      if (formMenus.filter((x) => x.autoIdx == 3).length > 0)
         this.mrIndent = true;
-      if (formMenus.filter((x) => x.autoIdx == 2221).length > 0)
+      if (formMenus.filter((x) => x.autoIdx == 3).length > 0)
         this.userIndent = true;
-      if (formMenus.filter((x) => x.autoIdx == 2222).length > 0)
-        this.adhocIndent = true;
     }
   }
 
